@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Board — Web Marketing Mockups</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{--navy:#142245;--neutral:#5c6584;--border:#bbc3d7;--bg-soft:#f7f8fb;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Mulish',-apple-system,sans-serif;color:var(--navy);background:var(--bg-soft);-webkit-font-smoothing:antialiased;line-height:1.5;min-height:100vh;}
+  .wrap{max-width:880px;margin:0 auto;padding:72px 32px;}
+  .eyebrow{font-weight:800;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:var(--neutral);margin-bottom:12px;}
+  h1{font-weight:900;font-size:40px;letter-spacing:-.5px;margin-bottom:14px;}
+  .sub{font-size:17px;color:var(--neutral);max-width:560px;margin-bottom:44px;}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px;}
+  a.card{display:block;text-decoration:none;background:#fff;border:1px solid var(--border);border-radius:14px;padding:26px;transition:.2s;}
+  a.card:hover{transform:translateY(-3px);box-shadow:0 14px 34px rgba(20,34,69,.12);border-color:var(--navy);}
+  .card h2{font-size:19px;font-weight:800;margin-bottom:6px;}
+  .card p{font-size:14px;color:var(--neutral);}
+  .card .meta{margin-top:16px;font-size:12px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:#0c8f6c;}
+  footer{margin-top:56px;font-size:13px;color:var(--neutral);}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="eyebrow">Board · Web Marketing</div>
+    <h1>Mockups</h1>
+    <p class="sub">Live, shareable prototypes for web marketing requests. Each card opens a self-contained mockup.</p>
+    <div class="grid">
+      <a class="card" href="partner-award-badges/">
+        <h2>Partner Award Badges</h2>
+        <p>Block options A–E for displaying partner award medallions on Partner Finder listings.</p>
+        <div class="meta">View mockup →</div>
+      </a>
+    </div>
+    <footer>Internal prototypes. Updated via the <code>claude</code> repo (<code>/docs</code>) → GitHub Pages.</footer>
+  </div>
+</body>
+</html>
