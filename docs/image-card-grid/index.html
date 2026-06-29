@@ -11,7 +11,7 @@
   .hero{background:var(--navy);color:#fff;padding:44px 0 38px;}
   .hero .kick{font-weight:800;font-size:12px;letter-spacing:1.6px;text-transform:uppercase;color:#9fb0d6;margin-bottom:10px;}
   .hero h1{font-weight:900;font-size:34px;letter-spacing:-.5px;margin-bottom:10px;}
-  .hero p{font-size:16px;color:#d3dbf0;max-width:720px;}
+  .hero p{font-size:16px;color:#d3dbf0;max-width:740px;}
   .hero a{color:#fff;font-weight:800;}
   section{padding:40px 0;border-bottom:1px solid #eef0f5;}
   h2{font-weight:900;font-size:22px;margin-bottom:14px;}
@@ -26,49 +26,40 @@
   .accept li{font-size:14px;margin-bottom:6px;}
   .accept{margin-left:18px;}
 
-  /* ---- controls ---- */
   .controls{position:sticky;top:0;z-index:5;background:#fff;border-bottom:1px solid #e8ebf2;padding:14px 0;}
   .controls .row{display:flex;flex-wrap:wrap;gap:14px 22px;align-items:flex-end;}
   .ctl{display:flex;flex-direction:column;gap:4px;}
   .ctl label{font-size:11px;font-weight:800;letter-spacing:.4px;text-transform:uppercase;color:var(--neutral);}
   .ctl select,.ctl input[type=range]{font-family:inherit;font-size:13px;font-weight:700;color:var(--navy);border:1px solid var(--border);border-radius:8px;padding:6px 10px;background:#fff;}
-  .ctl input[type=range]{padding:0;}
+  .ctl input[type=range]{padding:0;width:120px;}
+  .ctl input[type=color]{width:48px;height:34px;border:1px solid var(--border);border-radius:8px;background:#fff;cursor:pointer;padding:2px;}
 
-  /* ---- the block ---- */
-  .icg-block{padding:var(--block-pad,40px);background:var(--block-bg,#fff);border-radius:14px;}
-  .icg-head{margin-bottom:26px;}
-  .icg-head .ov{font-weight:800;font-size:12px;letter-spacing:1.4px;text-transform:uppercase;color:var(--neutral);}
-  .icg-head h4{font-weight:900;font-size:24px;margin:6px 0 14px;}
-  .icg-head .list{border-left:3px solid var(--navy);padding-left:18px;font-size:14px;color:var(--navy);display:grid;grid-template-columns:1fr 1fr;gap:6px 30px;max-width:760px;}
-  .icg-head .list span b{color:var(--neutral);margin-right:8px;}
-  .icg-head.hide{display:none;}
-
-  .icg-grid{display:grid;grid-template-columns:repeat(var(--cols,5),minmax(0,1fr));gap:var(--gap,24px);}
+  .icg-block{padding:32px;}
+  .icg-grid{display:grid;grid-template-columns:repeat(var(--cols,5),minmax(0,1fr));gap:var(--gap,24px);
+    --card-pad:20px;--card-radius:12px;--border-w:1px;--border-color:#bbc3d7;--card-bg:#ffffff;--img:120px;}
   .icg-grid.carousel{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:10px;}
   .icg-grid.carousel .card{flex:0 0 calc((100% - (var(--cols) - 1) * var(--gap,24px)) / var(--cols));scroll-snap-align:start;}
-  .card{display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center;}
-  .card.chrome{border:1px solid var(--border);border-radius:var(--card-radius,12px);padding:20px 16px;background:#fff;box-shadow:0 6px 18px rgba(20,34,69,.08);}
-  .card-imgwrap{width:var(--img,120px);height:var(--img,120px);display:flex;align-items:center;justify-content:center;}
+  .card{display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center;
+    padding:var(--card-pad);border:var(--border-w) solid var(--border-color);border-radius:var(--card-radius);background:var(--card-bg);}
+  .card-imgwrap{width:var(--img,120px);height:var(--img,120px);display:flex;align-items:center;justify-content:center;flex:0 0 auto;}
   .card-img{width:100%;height:100%;background-size:contain;background-repeat:no-repeat;background-position:center;}
   .shape-square .card-imgwrap{background:var(--bg-soft);border-radius:0;}
   .shape-rounded .card-imgwrap{background:var(--bg-soft);border-radius:16px;}
   .shape-square .card-img,.shape-rounded .card-img{background-size:cover;border-radius:inherit;}
-  .cap{display:flex;flex-direction:column;gap:2px;}
-  .cap .title{font-weight:800;font-size:14px;line-height:1.25;}
-  .cap .meta{font-weight:800;font-size:12px;color:var(--green);}
-  .icg-grid.no-text .cap{display:none;}
+  .card-text .title{font-weight:800;font-size:15px;line-height:1.25;}
+  .card-text p{font-size:13px;color:var(--neutral);margin-top:5px;line-height:1.4;}
 
   .carwrap{position:relative;}
   .arrow{position:absolute;top:calc(var(--img,120px)/2 + 20px);width:40px;height:40px;border-radius:50%;border:1px solid var(--border);background:#fff;font-weight:900;cursor:pointer;display:none;z-index:2;box-shadow:0 4px 12px rgba(20,34,69,.12);}
   .carwrap.on .arrow{display:block;}
   .arrow.prev{left:-8px;} .arrow.next{right:-8px;}
-  @media(max-width:760px){.spec{columns:1;}.icg-head .list{grid-template-columns:1fr;}}
+  @media(max-width:760px){.spec{columns:1;}}
 </style></head><body>
 
 <div class="hero"><div class="page">
   <div class="kick">Board · Web · Block brief</div>
   <h1>Image Card Grid</h1>
-  <p>A single, reusable WordPress block: a configurable grid or carousel of image cards with optional text. Every option below is built in, so any layout is possible from the editor. The partner award badges are one preset of it. Visual design: <a href="https://www.figma.com/design/M07htNU18uMwaOLys0h3z1/Partner-Awards-Block---BOARD?node-id=16-1435">Figma file</a>.</p>
+  <p>A single, reusable WordPress block: a configurable grid or carousel of image cards. Each card can carry a heading and paragraph, editable and deletable per card. General purpose (products, logos, team, resources, partners, and more). The partner award badges are just one preset. Visual design: <a href="https://www.figma.com/design/M07htNU18uMwaOLys0h3z1/Partner-Awards-Block---BOARD?node-id=16-1435">Figma file</a>.</p>
 </div></div>
 
 <section><div class="page">
@@ -84,99 +75,83 @@
       <li><b>Alignment:</b> left / centred</li></ul></div>
     <div class="grp"><h3>Image</h3><ul>
       <li><b>Size:</b> small / medium / large</li>
-      <li><b>Shape:</b> circle / square / rounded</li>
       <li><b>Fit:</b> contain / cover</li></ul></div>
     <div class="grp"><h3>Card</h3><ul>
-      <li><b>Chrome:</b> bare image or card</li>
-      <li><b>Border</b> (colour, width), <b>corner radius</b>, <b>padding</b></li>
-      <li><b>Background</b>, <b>shadow</b>, <b>hover lift</b></li>
+      <li><b>Card padding</b></li>
+      <li><b>Corner radius</b></li>
+      <li><b>Border thickness</b> (0 = none)</li>
+      <li><b>Border colour</b></li>
+      <li><b>Background colour</b></li>
+      <li><b>Shadow</b>, <b>hover lift</b> (optional)</li>
       <li><b>Clickable:</b> link whole card to a URL</li></ul></div>
-    <div class="grp"><h3>Card text (optional)</h3><ul>
-      <li><b>Show text</b> on/off</li>
-      <li><b>Title</b> (1–2 lines), <b>subtitle</b>, <b>meta line</b></li>
-      <li><b>Alignment</b></li></ul></div>
+    <div class="grp"><h3>Card content (per card)</h3><ul>
+      <li><b>Heading + paragraph</b> present by default</li>
+      <li>Each is editable and <b>deletable per card</b> (standard Gutenberg inner blocks)</li>
+      <li>So one grid can mix full text, heading only, or image only</li></ul></div>
     <div class="grp"><h3>Block container</h3><ul>
-      <li><b>Padding</b>, <b>background</b>, <b>border + radius</b></li>
-      <li><b>Width:</b> contained / full</li></ul></div>
-    <div class="grp"><h3>Above the grid (optional)</h3><ul>
-      <li><b>Heading / overline</b></li>
-      <li><b>Intro text or written list</b></li>
-      <li><b>Divider</b></li></ul></div>
+      <li><b>Width:</b> contained / full</li>
+      <li>Page heading or intro uses standard WP Heading / Paragraph blocks <b>above</b> this block, not built in</li></ul></div>
     <div class="grp"><h3>Card data (repeater)</h3><ul>
-      <li>Each card: <b>image</b> (required), title, subtitle, meta, link</li></ul></div>
+      <li>Each card: <b>image</b> (required) + optional heading + paragraph + link</li></ul></div>
   </div>
   <h3>Behaviour notes</h3>
   <ul class="accept">
     <li>Cards are a repeatable list; the block renders however many are added.</li>
     <li>Grid and carousel share the same card; switching mode does not change the data.</li>
-    <li>Should handle 1 to ~24 cards gracefully.</li>
-    <li>"Card chrome off" = bare images (the badge use case); "on" = bordered cards.</li>
+    <li>Heading and paragraph are real inner blocks, so they delete, edit, and style like any text in Gutenberg.</li>
+    <li>Border thickness 0 + transparent background gives the "bare image" look (the badge grid).</li>
   </ul>
-  <p class="note">The live demo below is the reference for how each option behaves. Inspect the page source for the markup and CSS that map to these attributes.</p>
+  <p class="note">The live demo below is the reference for how each option behaves. The cards show a deliberate mix: most with heading + paragraph, one heading only, one image only.</p>
 </div></section>
 
 <div class="controls"><div class="page"><div class="row">
   <div class="ctl"><label>Mode</label><select id="mode"><option value="grid">Grid</option><option value="carousel">Carousel</option></select></div>
   <div class="ctl"><label>Columns</label><select id="cols"><option>2</option><option>3</option><option>4</option><option selected>5</option><option>6</option></select></div>
   <div class="ctl"><label>Image size</label><select id="size"><option value="80">Small</option><option value="120" selected>Medium</option><option value="160">Large</option></select></div>
-  <div class="ctl"><label>Image shape</label><select id="shape"><option value="circle" selected>Circle</option><option value="square">Square</option><option value="rounded">Rounded</option></select></div>
-  <div class="ctl"><label>Card</label><select id="card"><option value="bare" selected>Bare image</option><option value="chrome">Bordered card</option></select></div>
-  <div class="ctl"><label>Card radius</label><input type="range" id="radius" min="0" max="24" value="12"></div>
-  <div class="ctl"><label>Text</label><select id="text"><option value="show" selected>Shown</option><option value="hide">Hidden</option></select></div>
-  <div class="ctl"><label>Block padding</label><select id="pad"><option value="0">None</option><option value="24">S</option><option value="40" selected>M</option><option value="64">L</option></select></div>
-  <div class="ctl"><label>Header</label><select id="head"><option value="hide" selected>None</option><option value="show">Heading + list</option></select></div>
+  <div class="ctl"><label>Card padding</label><input type="range" id="pad" min="0" max="32" value="20"></div>
+  <div class="ctl"><label>Corner radius</label><input type="range" id="radius" min="0" max="24" value="12"></div>
+  <div class="ctl"><label>Border thickness</label><input type="range" id="bw" min="0" max="4" value="1"></div>
+  <div class="ctl"><label>Border colour</label><input type="color" id="bcol" value="#bbc3d7"></div>
+  <div class="ctl"><label>Background</label><input type="color" id="bg" value="#ffffff"></div>
 </div></div></div>
 
 <section style="background:var(--bg-soft);"><div class="page">
   <div class="carwrap" id="carwrap">
-    <button class="arrow prev" id="prev">‹</button>
-    <button class="arrow next" id="next">›</button>
-    <div class="icg-block" id="block">
-      <div class="icg-head hide" id="head">
-        <div class="ov">Partner Awards &amp; Designations</div>
-        <h4>Awards &amp; Recognition</h4>
-        <div class="list">
-          <span><b>2025</b>Global Partner of the Year</span><span><b>2025</b>Partner of the Year, North Europe</span>
-          <span><b>2023</b>Successful Implementation Award</span><span><b>2019</b>Partner of the Year, DACH</span>
-        </div>
-      </div>
+    <button class="arrow prev" id="prev">&lsaquo;</button>
+    <button class="arrow next" id="next">&rsaquo;</button>
+    <div class="icg-block">
       <div class="icg-grid" id="grid">
-        <div class="card"><div class="card-imgwrap"><div class="card-img" style="background-image:var(--img-glob)"></div></div><div class="cap"><span class="title">Global Partner of the Year</span><span class="meta">2023 · 2025</span></div></div>
-        <div class="card"><div class="card-imgwrap"><div class="card-img" style="background-image:var(--img-ne)"></div></div><div class="cap"><span class="title">Partner of the Year, North Europe</span><span class="meta">2024 · 2025</span></div></div>
-        <div class="card"><div class="card-imgwrap"><div class="card-img" style="background-image:var(--img-dach)"></div></div><div class="cap"><span class="title">Partner of the Year, DACH</span><span class="meta">2019 · 2021</span></div></div>
-        <div class="card"><div class="card-imgwrap"><div class="card-img" style="background-image:var(--img-glob)"></div></div><div class="cap"><span class="title">Partner Solution Innovation Award</span><span class="meta">2025</span></div></div>
-        <div class="card"><div class="card-imgwrap"><div class="card-img" style="background-image:var(--img-ne)"></div></div><div class="cap"><span class="title">Successful Implementation Award</span><span class="meta">2023</span></div></div>
-        <div class="card"><div class="card-imgwrap"><div class="card-img" style="background-image:var(--img-dach)"></div></div><div class="cap"><span class="title">Board Solution Builder Challenge</span><span class="meta">2023</span></div></div>
+        <div class="card"><div class="card-imgwrap"><div class="card-img" style="background-image:var(--img-glob)"></div></div><div class="card-text"><div class="title">Global Partner of the Year</div><p>Recognised for outstanding partnership and delivery worldwide.</p></div></div>
+        <div class="card"><div class="card-imgwrap"><div class="card-img" style="background-image:var(--img-ne)"></div></div><div class="card-text"><div class="title">Partner of the Year, North Europe</div><p>Top-performing partner across the North Europe region.</p></div></div>
+        <div class="card"><div class="card-imgwrap"><div class="card-img" style="background-image:var(--img-dach)"></div></div><div class="card-text"><div class="title">Successful Implementation Award</div></div></div>
+        <div class="card"><div class="card-imgwrap"><div class="card-img" style="background-image:var(--img-glob)"></div></div></div>
+        <div class="card"><div class="card-imgwrap"><div class="card-img" style="background-image:var(--img-ne)"></div></div><div class="card-text"><div class="title">Partner Solution Innovation Award</div><p>For an innovative solution built on the platform.</p></div></div>
+        <div class="card"><div class="card-imgwrap"><div class="card-img" style="background-image:var(--img-dach)"></div></div><div class="card-text"><div class="title">Board Solution Builder Challenge</div><p>Winner of the annual solution builder challenge.</p></div></div>
       </div>
     </div>
   </div>
 </div></section>
 
 <script>
-  var grid=document.getElementById('grid'), block=document.getElementById('block'),
-      carwrap=document.getElementById('carwrap'), head=document.getElementById('head');
+  var grid=document.getElementById('grid'), carwrap=document.getElementById('carwrap');
   function $(id){return document.getElementById(id);}
   function apply(){
-    var cols=$('cols').value, size=$('size').value, shape=$('shape').value,
-        mode=$('mode').value, card=$('card').value, text=$('text').value,
-        pad=$('pad').value, radius=$('radius').value, showHead=$('head').value;
-    grid.style.setProperty('--cols', cols);
-    grid.style.setProperty('--img', size+'px');
-    grid.style.setProperty('--card-radius', radius+'px');
-    block.style.setProperty('--block-pad', pad+'px');
-    grid.classList.toggle('carousel', mode==='carousel');
-    grid.classList.toggle('no-text', text==='hide');
+    grid.style.setProperty('--cols', $('cols').value);
+    grid.style.setProperty('--img', $('size').value+'px');
+    grid.style.setProperty('--card-pad', $('pad').value+'px');
+    grid.style.setProperty('--card-radius', $('radius').value+'px');
+    grid.style.setProperty('--border-w', $('bw').value+'px');
+    grid.style.setProperty('--border-color', $('bcol').value);
+    grid.style.setProperty('--card-bg', $('bg').value);
+    var mode=$('mode').value;
+    grid.className='icg-grid'+(mode==='carousel'?' carousel':'');
     carwrap.classList.toggle('on', mode==='carousel');
-    grid.className='icg-grid'+(mode==='carousel'?' carousel':'')+(text==='hide'?' no-text':'')+' shape-'+shape;
-    [].forEach.call(grid.querySelectorAll('.card'),function(c){c.classList.toggle('chrome', card==='chrome');});
-    head.classList.toggle('hide', showHead!=='show');
   }
-  ['mode','cols','size','shape','card','radius','text','pad','head'].forEach(function(id){
+  ['mode','cols','size','pad','radius','bw','bcol','bg'].forEach(function(id){
     $(id).addEventListener('input', apply);
   });
-  var step=300;
-  $('next').addEventListener('click',function(){grid.scrollBy({left:step,behavior:'smooth'});});
-  $('prev').addEventListener('click',function(){grid.scrollBy({left:-step,behavior:'smooth'});});
+  $('next').addEventListener('click',function(){grid.scrollBy({left:300,behavior:'smooth'});});
+  $('prev').addEventListener('click',function(){grid.scrollBy({left:-300,behavior:'smooth'});});
   apply();
 </script>
 </body></html>
