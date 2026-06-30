@@ -49,6 +49,13 @@
   .card-text .title{font-weight:800;font-size:15px;line-height:1.25;}
   .card-text p{font-size:13px;color:var(--neutral);margin-top:5px;line-height:1.4;}
 
+  .card{transition:transform .25s ease,box-shadow .25s ease,border-color .2s ease;}
+  .card-img{transition:transform .3s ease;}
+  .hover-zoom .card-imgwrap{overflow:hidden;}
+  .hover-lift .card:hover{transform:translateY(-6px);}
+  .hover-shadow .card:hover{box-shadow:0 14px 34px rgba(20,34,69,.18);}
+  .hover-liftshadow .card:hover{transform:translateY(-6px);box-shadow:0 16px 36px rgba(20,34,69,.2);}
+  .hover-zoom .card:hover .card-img{transform:scale(1.08);}
   .carwrap{position:relative;}
   .arrow{position:absolute;top:calc(var(--img,120px)/2 + 20px);width:40px;height:40px;border-radius:50%;border:1px solid var(--border);background:#fff;font-weight:900;cursor:pointer;display:none;z-index:2;box-shadow:0 4px 12px rgba(20,34,69,.12);}
   .carwrap.on .arrow{display:block;}
@@ -82,7 +89,7 @@
       <li><b>Border thickness</b> (0 = none)</li>
       <li><b>Border colour</b></li>
       <li><b>Background colour</b></li>
-      <li><b>Shadow</b>, <b>hover lift</b> (optional)</li>
+      <li><b>Hover</b>: lift, shadow, or image zoom</li>
       <li><b>Clickable:</b> link whole card to a URL</li></ul></div>
     <div class="grp"><h3>Card content (per card)</h3><ul>
       <li><b>Heading + paragraph</b> present by default</li>
@@ -113,6 +120,7 @@
   <div class="ctl"><label>Border thickness</label><input type="range" id="bw" min="0" max="4" value="1"></div>
   <div class="ctl"><label>Border colour</label><input type="color" id="bcol" value="#bbc3d7"></div>
   <div class="ctl"><label>Background</label><input type="color" id="bg" value="#ffffff"></div>
+  <div class="ctl"><label>Hover</label><select id="hover"><option value="none">None</option><option value="lift" selected>Lift</option><option value="shadow">Shadow</option><option value="liftshadow">Lift + shadow</option><option value="zoom">Image zoom</option></select></div>
 </div></div></div>
 
 <section style="background:var(--bg-soft);"><div class="page">
@@ -144,10 +152,10 @@
     grid.style.setProperty('--border-color', $('bcol').value);
     grid.style.setProperty('--card-bg', $('bg').value);
     var mode=$('mode').value;
-    grid.className='icg-grid'+(mode==='carousel'?' carousel':'');
+    grid.className='icg-grid'+(mode==='carousel'?' carousel':'')+' hover-'+$('hover').value;
     carwrap.classList.toggle('on', mode==='carousel');
   }
-  ['mode','cols','size','pad','radius','bw','bcol','bg'].forEach(function(id){
+  ['mode','cols','size','pad','radius','bw','bcol','bg','hover'].forEach(function(id){
     $(id).addEventListener('input', apply);
   });
   $('next').addEventListener('click',function(){grid.scrollBy({left:300,behavior:'smooth'});});

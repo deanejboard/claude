@@ -18,7 +18,7 @@ Each card is an image (required) plus an optional heading and paragraph. The hea
 - **Columns (desktop):** 2 to 6, with a sensible step-down on tablet and mobile.
 - **Gap** between cards.
 - **Image:** size (small / medium / large), fit (contain or cover).
-- **Card:** padding, corner radius, border thickness, border colour, background colour, optional shadow and hover, and an optional link on the whole card.
+- **Card:** padding, corner radius, border thickness, border colour, background colour, optional hover effect (lift, shadow, or image zoom), and an optional link on the whole card.
 - **Block width:** contained or full width.
 
 ## States to design
