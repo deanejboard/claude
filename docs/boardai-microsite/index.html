@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Board AI — protected</title>
+<style>
+  body { margin:0; min-height:100vh; display:grid; place-items:center;
+        background:#fdfcfc; color:#292929; font-family:-apple-system,'Segoe UI',Arial,sans-serif; }
+  .gate { width:min(400px,90vw); border:1px solid #e5e2df; border-radius:12px; padding:2.6rem; text-align:center; }
+  .dot { width:12px; height:12px; border-radius:50%; margin:0 auto 1rem;
+        background:linear-gradient(100deg,#2f7cf6,#6d4df2 55%,#29c8e0); }
+  h1 { font-size:1.25rem; margin:0 0 .4rem; }
+  p { color:#6b6a68; font-size:.92rem; margin:0 0 1.6rem; }
+  input { width:100%; box-sizing:border-box; padding:.75rem 1rem; font-size:1rem;
+         border:1px solid #dedcda; border-radius:8px; background:#faf8f6; }
+  input:focus { outline:2px solid #2f7cf6; }
+  button { width:100%; margin-top:1rem; padding:.8rem; font-size:1rem; border:0;
+          border-radius:50px; background:#142245; color:#fdfcfc; cursor:pointer; }
+  .err { color:#b3261e; font-size:.85rem; min-height:1.2em; margin:.6rem 0 0; }
+</style>
+</head>
+<body>
+<form class="gate" id="gate">
+  <div class="dot"></div>
+  <h1>Board AI — internal preview</h1>
+  <p>Enter the access password to view this page.</p>
+  <input type="password" id="pw" placeholder="Password" autofocus autocomplete="current-password">
+  <button type="submit">Unlock</button>
+  <p class="err" id="err"></p>
+</form>
+<script>
+const SALT = "tTZxRLyucy2GpN9OceL8fA==", NONCE = "O0el11twZflLZNIF", DATA = "HffwDU+dAiyHKE30J94iV1fx1F4akVMC1c+vR+Y4niRrGN93a9tYOA0CSYwPIS0rkx0MdWgXluSLw09wJNubRyovB+Lf+3TfvNZw2EBQ5U9HwNNll+KIJ3JhSrHrwbtMrZDOk75AdIeq8gMLsixoQUiQ4x6frorWQSiPznUmCv8d2ORJZBI/pbdjdPuKdwzyiks3SFyU2MXHyzm2hOge0R5peYEuG15CYipXi6HjMytKE26MLRXtq8EECo4vhdMfqjjA2ZgxSAnsPhWwTpnG2Wd/h7e093u3AKSMm0gShWIQDfxBbKXRkZmGGNRnvvOutbnDFBgKnGAZTqsZxkUtH+cSC3nYRKP73t/LkvflfLC40iUz5B5hkqdBIiRcmaoxbzs/4zzQTUWTEspVJVi4qPJvRtPEvaEsnCrvO4jCbF+sQxAZPhbl6QPCeG+R2S2oItiHkIQK+3XtQPqxUdlO+7XiKv6upO+WH2t7hu+wpGXZON+eoXxsHCYyrL4JPDdgFtjx8USc7QvEgzjfM0mJNAhpMMy76cO50mYpq7bpLzqmNLBJPwV9ivk+0mJQSByeCI87V+iaZ+6e4LI3Tx4ed1nfNcUuomRVAjOWipcLinK2mqNOWPQ+eygtcI6FEbL9f7lVgFe6waFlQ9YBE7PtTRzVbtEMJssIneqSWej+yR1YnTLWugu+LmOeb5iaFaJSCVz/XGTqiAP5LJwX+E57b4qXuBSbwVnY3qoAlSzYFysy5G3LgbzWYPV/pa+J+o9YOyTmzGGa0nGwBaRBrcFb1bSEj0JZmyTbLZblCPNR7R23rVgIr+l4KPn07wdThFnt80PWNBxCk36+1MJDL2wlClZlAZWjljtTElCv5BusrNACd3c4kcHSxAOK2kMr54qUxslAVvvMn55N1RXRoLD6eIu8xMcthksh9ucSuEHrrMmuwe5dAAjNEU6cQTN1BVidccFaRYTUR67l1JAGeGSVPM0OnFqzVBacc28/9SWeopx2UQwcUSl739440zD36fj9P8oZIy/3lFZBCubG7NjyD8vGPSXMJ0V309DyX/zeoJkw8Vz9foUY6vYO1juMPHnqJy8dMsCksAaBXHF8odu7I8guzmpmSydndmapu6AJqnROTJqAR06bkSBFFPahLTzxbhSH3J3lmXWU4wGsMrO+9+Bu/krX4j0BTYDwel+JHVDSPnc63tsLvlAhwejUmJNP/gHGO2r+CPimk93VGNKHvAouk9DzCpridhCCZGJ4npb5xxty4GSMD/ejsPCGFG2D1CaJzNIgZDH+zJLiTxd4NBYCjqLit6HDLL3qnPTfOOAdHpe86UlMg21l189yBWDG2289qzJqX7wfN0V5gawDVPdK2YcBGI+C8HyfJFJHu7061ZM+kTgR40HGzzN8d3562LlYYTdE8uebz+0ifDr3nFhcE+iGYGZqTnN1imxe/vQiWYKKlX6HdocXydLnjHOVTL6SXiZ85TQhpBp/ZOt4gT+NhLxKWmyA4DCgBzl1v/p2nhjxa96RdPGY4XTbbbCd46fRS2iiI/Tou6l0Qe8gMpe/wYlrevEVz8sXc/Z+4AXMcLa5fyOuJOUFe+Wo", ITER = 310000;
+const b64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+async function keyFromPassword(pw) {
+  const mat = await crypto.subtle.importKey("raw", new TextEncoder().encode(pw), "PBKDF2", false, ["deriveKey"]);
+  return crypto.subtle.deriveKey({name:"PBKDF2", salt:b64(SALT), iterations:ITER, hash:"SHA-256"},
+    mat, {name:"AES-GCM", length:256}, true, ["decrypt"]);
+}
+async function tryDecrypt(key) {
+  const plain = await crypto.subtle.decrypt({name:"AES-GCM", iv:b64(NONCE)}, key, b64(DATA));
+  const html = new TextDecoder().decode(plain);
+  document.open(); document.write(html); document.close();
+}
+async function boot() {
+  const saved = localStorage.getItem("boardai-key");
+  if (saved) {
+    try {
+      const key = await crypto.subtle.importKey("raw", b64(saved), "AES-GCM", false, ["decrypt"]);
+      await tryDecrypt(key); return;
+    } catch (e) { localStorage.removeItem("boardai-key"); }
+  }
+  document.getElementById("gate").addEventListener("submit", async (ev) => {
+    ev.preventDefault();
+    try {
+      const key = await keyFromPassword(document.getElementById("pw").value);
+      const raw = await crypto.subtle.exportKey("raw", key);
+      await tryDecrypt(key);
+      localStorage.setItem("boardai-key", btoa(String.fromCharCode(...new Uint8Array(raw))));
+    } catch (e) {
+      document.getElementById("err").textContent = "Wrong password — try again.";
+    }
+  });
+}
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", boot);
+} else {
+  boot();
+}
+</script>
+</body>
+</html>

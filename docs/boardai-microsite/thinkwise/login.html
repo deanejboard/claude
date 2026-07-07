@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Board AI — protected</title>
+<style>
+  body { margin:0; min-height:100vh; display:grid; place-items:center;
+        background:#fdfcfc; color:#292929; font-family:-apple-system,'Segoe UI',Arial,sans-serif; }
+  .gate { width:min(400px,90vw); border:1px solid #e5e2df; border-radius:12px; padding:2.6rem; text-align:center; }
+  .dot { width:12px; height:12px; border-radius:50%; margin:0 auto 1rem;
+        background:linear-gradient(100deg,#2f7cf6,#6d4df2 55%,#29c8e0); }
+  h1 { font-size:1.25rem; margin:0 0 .4rem; }
+  p { color:#6b6a68; font-size:.92rem; margin:0 0 1.6rem; }
+  input { width:100%; box-sizing:border-box; padding:.75rem 1rem; font-size:1rem;
+         border:1px solid #dedcda; border-radius:8px; background:#faf8f6; }
+  input:focus { outline:2px solid #2f7cf6; }
+  button { width:100%; margin-top:1rem; padding:.8rem; font-size:1rem; border:0;
+          border-radius:50px; background:#142245; color:#fdfcfc; cursor:pointer; }
+  .err { color:#b3261e; font-size:.85rem; min-height:1.2em; margin:.6rem 0 0; }
+</style>
+</head>
+<body>
+<form class="gate" id="gate">
+  <div class="dot"></div>
+  <h1>Board AI — internal preview</h1>
+  <p>Enter the access password to view this page.</p>
+  <input type="password" id="pw" placeholder="Password" autofocus autocomplete="current-password">
+  <button type="submit">Unlock</button>
+  <p class="err" id="err"></p>
+</form>
+<script>
+const SALT = "tTZxRLyucy2GpN9OceL8fA==", NONCE = "ecG8kDwSQEd+Wp6H", DATA = "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", ITER = 310000;
+const b64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+async function keyFromPassword(pw) {
+  const mat = await crypto.subtle.importKey("raw", new TextEncoder().encode(pw), "PBKDF2", false, ["deriveKey"]);
+  return crypto.subtle.deriveKey({name:"PBKDF2", salt:b64(SALT), iterations:ITER, hash:"SHA-256"},
+    mat, {name:"AES-GCM", length:256}, true, ["decrypt"]);
+}
+async function tryDecrypt(key) {
+  const plain = await crypto.subtle.decrypt({name:"AES-GCM", iv:b64(NONCE)}, key, b64(DATA));
+  const html = new TextDecoder().decode(plain);
+  document.open(); document.write(html); document.close();
+}
+async function boot() {
+  const saved = localStorage.getItem("boardai-key");
+  if (saved) {
+    try {
+      const key = await crypto.subtle.importKey("raw", b64(saved), "AES-GCM", false, ["decrypt"]);
+      await tryDecrypt(key); return;
+    } catch (e) { localStorage.removeItem("boardai-key"); }
+  }
+  document.getElementById("gate").addEventListener("submit", async (ev) => {
+    ev.preventDefault();
+    try {
+      const key = await keyFromPassword(document.getElementById("pw").value);
+      const raw = await crypto.subtle.exportKey("raw", key);
+      await tryDecrypt(key);
+      localStorage.setItem("boardai-key", btoa(String.fromCharCode(...new Uint8Array(raw))));
+    } catch (e) {
+      document.getElementById("err").textContent = "Wrong password — try again.";
+    }
+  });
+}
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", boot);
+} else {
+  boot();
+}
+</script>
+</body>
+</html>

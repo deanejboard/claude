@@ -1,0 +1,162 @@
+/* ============================================================
+   Board AI — design tokens
+   Base system lifted from the ThinkWise template (Loonis),
+   with a light Board flavor: navy ink for actions + Board
+   gradient accents. Everything in styles.css references these.
+   ============================================================ */
+
+/* ---- Fonts (self-hosted) ---- */
+@font-face {
+  font-family: 'Gambarino';
+  src: url('../assets/fonts/Gambarino-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Switzer';
+  src: url('../assets/fonts/Switzer-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Switzer';
+  src: url('../assets/fonts/Switzer-Medium.otf') format('opentype');
+  font-weight: 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Switzer';
+  src: url('../assets/fonts/Switzer-Semibold.otf') format('opentype');
+  font-weight: 600;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Switzer';
+  src: url('../assets/fonts/Switzer-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Satoshi';
+  src: url('../assets/fonts/Satoshi-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Satoshi';
+  src: url('../assets/fonts/Satoshi-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('../assets/fonts/GeistMono-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('../assets/fonts/GeistMono-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-display: swap;
+}
+
+:root {
+  /* ---- Color: template base ---- */
+  --color-white: #fdfcfc;
+  --color-ink: #292929;
+  --color-shade-50: #faf8f6;
+  --color-shade-100: #f5f3f1;
+  --color-shade-200: #f2f0ee;
+  --color-shade-300: #edebe9;
+  --color-shade-400: #dedcda;
+  --color-shade-600: #d9d7d5;
+  --color-shade-800: #c2c0bf;
+  --color-shade-900: #a6a4a3;
+
+  /* ---- Color: Board flavor ---- */
+  --board-navy: #142245;        /* BoardBlue-800 — replaces pure black on actions */
+  --board-navy-deep: #0d1730;
+  --board-azure: #2f7cf6;
+  --board-violet: #6d4df2;
+  --board-cyan: #29c8e0;
+  --board-gradient: linear-gradient(100deg, var(--board-azure), var(--board-violet) 55%, var(--board-cyan));
+
+  /* ---- Semantic ---- */
+  --bg-page: var(--color-white);
+  --bg-card: var(--color-shade-100);
+  --bg-card-soft: var(--color-shade-50);
+  --text-primary: var(--color-ink);
+  --text-secondary: #6b6a68;
+  --text-on-dark: var(--color-white);
+  --border-soft: var(--color-shade-400);
+  --border-dotted: 1px dashed var(--color-shade-800);
+  --action-fill: var(--board-navy);
+  --action-fill-hover: var(--board-navy-deep);
+
+  /* ---- Type ---- */
+  --font-heading: 'Satoshi', 'Switzer', Arial, sans-serif;
+  --fw-heading: 700;
+  --font-body: 'Switzer', Arial, sans-serif;
+  --font-badge: 'Geist Mono', ui-monospace, monospace;
+
+  --fs-h1: 3.5rem;
+  --fs-h2: 2.5rem;
+  --fs-h3: 2rem;
+  --fs-h4: 1.75rem;
+  --fs-h5: 1.5rem;
+  --fs-h6: 1.125rem;
+  --fs-display: 4.5rem;         /* oversized hero serif */
+  --fs-body-lg: 1.25rem;
+  --fs-body-md: 1.125rem;
+  --fs-body-sm: 1rem;
+  --fs-badge: 1rem;
+
+  --lh-h1: 110%;
+  --lh-h2: 115%;
+  --lh-h3: 120%;
+  --lh-body: 150%;
+
+  /* ---- Layout ---- */
+  --container: 1400px;
+  --content-lg: 896px;
+  --content-md: 654px;
+  --content-sm: 480px;
+  --gutter: 2rem;
+
+  --section-lg: 128px;
+  --section-md: 84px;
+  --section-sm: 44px;
+
+  /* ---- Shape ---- */
+  --radius: 12px;
+  --radius-pill: 50px;
+
+  /* ---- Motion ---- */
+  --ease-out: cubic-bezier(.22, 1, .36, 1);
+  --dur-fast: .3s;
+  --dur-med: .6s;
+}
+
+@media (max-width: 991px) {
+  :root {
+    --fs-h1: 3rem;
+    --fs-display: 3.4rem;
+    --fs-h2: 2.2rem;
+    --section-lg: 112px;
+    --section-md: 72px;
+  }
+}
+
+@media (max-width: 767px) {
+  :root {
+    --fs-h1: 2.625rem;
+    --fs-display: 2.7rem;
+    --fs-h2: 1.875rem;
+    --fs-h3: 1.5rem;
+    --fs-body-lg: 1.125rem;
+    --section-lg: 96px;
+    --section-md: 64px;
+    --gutter: 1.25rem;
+  }
+}

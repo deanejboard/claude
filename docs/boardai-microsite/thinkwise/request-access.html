@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Board AI — protected</title>
+<style>
+  body { margin:0; min-height:100vh; display:grid; place-items:center;
+        background:#fdfcfc; color:#292929; font-family:-apple-system,'Segoe UI',Arial,sans-serif; }
+  .gate { width:min(400px,90vw); border:1px solid #e5e2df; border-radius:12px; padding:2.6rem; text-align:center; }
+  .dot { width:12px; height:12px; border-radius:50%; margin:0 auto 1rem;
+        background:linear-gradient(100deg,#2f7cf6,#6d4df2 55%,#29c8e0); }
+  h1 { font-size:1.25rem; margin:0 0 .4rem; }
+  p { color:#6b6a68; font-size:.92rem; margin:0 0 1.6rem; }
+  input { width:100%; box-sizing:border-box; padding:.75rem 1rem; font-size:1rem;
+         border:1px solid #dedcda; border-radius:8px; background:#faf8f6; }
+  input:focus { outline:2px solid #2f7cf6; }
+  button { width:100%; margin-top:1rem; padding:.8rem; font-size:1rem; border:0;
+          border-radius:50px; background:#142245; color:#fdfcfc; cursor:pointer; }
+  .err { color:#b3261e; font-size:.85rem; min-height:1.2em; margin:.6rem 0 0; }
+</style>
+</head>
+<body>
+<form class="gate" id="gate">
+  <div class="dot"></div>
+  <h1>Board AI — internal preview</h1>
+  <p>Enter the access password to view this page.</p>
+  <input type="password" id="pw" placeholder="Password" autofocus autocomplete="current-password">
+  <button type="submit">Unlock</button>
+  <p class="err" id="err"></p>
+</form>
+<script>
+const SALT = "tTZxRLyucy2GpN9OceL8fA==", NONCE = "cWLvBgQZA0xjoloP", DATA = "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", ITER = 310000;
+const b64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+async function keyFromPassword(pw) {
+  const mat = await crypto.subtle.importKey("raw", new TextEncoder().encode(pw), "PBKDF2", false, ["deriveKey"]);
+  return crypto.subtle.deriveKey({name:"PBKDF2", salt:b64(SALT), iterations:ITER, hash:"SHA-256"},
+    mat, {name:"AES-GCM", length:256}, true, ["decrypt"]);
+}
+async function tryDecrypt(key) {
+  const plain = await crypto.subtle.decrypt({name:"AES-GCM", iv:b64(NONCE)}, key, b64(DATA));
+  const html = new TextDecoder().decode(plain);
+  document.open(); document.write(html); document.close();
+}
+async function boot() {
+  const saved = localStorage.getItem("boardai-key");
+  if (saved) {
+    try {
+      const key = await crypto.subtle.importKey("raw", b64(saved), "AES-GCM", false, ["decrypt"]);
+      await tryDecrypt(key); return;
+    } catch (e) { localStorage.removeItem("boardai-key"); }
+  }
+  document.getElementById("gate").addEventListener("submit", async (ev) => {
+    ev.preventDefault();
+    try {
+      const key = await keyFromPassword(document.getElementById("pw").value);
+      const raw = await crypto.subtle.exportKey("raw", key);
+      await tryDecrypt(key);
+      localStorage.setItem("boardai-key", btoa(String.fromCharCode(...new Uint8Array(raw))));
+    } catch (e) {
+      document.getElementById("err").textContent = "Wrong password — try again.";
+    }
+  });
+}
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", boot);
+} else {
+  boot();
+}
+</script>
+</body>
+</html>
