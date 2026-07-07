@@ -1,0 +1,93 @@
+/* ============================================================
+   Board AI — stripe variant · design tokens
+   Light, Stripe-inspired direction: off-white ground, Board wave
+   palette (from Figma Brand System dividers), Satoshi throughout.
+   ============================================================ */
+
+@font-face {
+  font-family: 'Satoshi';
+  src: url('../assets/fonts/Satoshi-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Satoshi';
+  src: url('../assets/fonts/Satoshi-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Satoshi';
+  src: url('../assets/fonts/Satoshi-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Satoshi';
+  src: url('../assets/fonts/Satoshi-Black.woff2') format('woff2');
+  font-weight: 900;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('../assets/fonts/GeistMono-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+
+:root {
+  /* ---- Ground ---- */
+  --bg: #fdfcfc;                /* off-white (shared with thinkwise variant) */
+  --bg-card: #ffffff;
+  --bg-tint: #f6f7fc;           /* cool tint for alternate sections */
+
+  /* ---- Ink ---- */
+  --ink: #142245;               /* BoardBlue-800 — headings */
+  --ink-chart: #20264a;
+  --text: #33395c;
+  --text-2: #6b7194;
+  --border: rgba(20, 34, 69, .1);
+  --border-strong: rgba(20, 34, 69, .18);
+
+  /* ---- Board wave palette (actual brand asset colors) ---- */
+  --w-purple: #8739E4;
+  --w-navy: #253E7D;
+  --w-sky: #32BEF0;
+  --w-mint: #46EEAA;
+  --w-teal: #0C9995;
+  --w-lime: #D5FF62;
+  /* aliases used across components */
+  --w-violet: var(--w-purple);
+  --w-blue: var(--w-sky);
+  --w-cyan: var(--w-sky);
+
+  --grad-brand: linear-gradient(100deg, var(--w-purple), var(--w-sky) 55%, var(--w-mint));
+  --grad-cta: linear-gradient(115deg, var(--w-navy), var(--w-purple) 55%, var(--w-sky));
+
+  /* ---- Type ---- */
+  --font: 'Satoshi', -apple-system, Arial, sans-serif;
+  --font-mono: 'Geist Mono', ui-monospace, monospace;
+
+  --fs-hero: clamp(2.9rem, 6.4vw, 5.4rem);
+  --fs-h2: clamp(2rem, 3.8vw, 3.1rem);
+  --fs-h3: 1.35rem;
+  --fs-body: 1.06rem;
+  --fs-body-lg: 1.22rem;
+  --fs-overline: .78rem;
+
+  /* ---- Layout ---- */
+  --container: 1200px;
+  --pad: clamp(1.25rem, 3vw, 2rem);
+  --section: clamp(84px, 9vw, 150px);
+
+  /* ---- Shape & depth ---- */
+  --radius: 14px;
+  --radius-lg: 20px;
+  --radius-pill: 100vw;
+  --shadow-card: 0 2px 5px -1px rgba(20, 34, 69, .08), 0 8px 24px -8px rgba(20, 34, 69, .12);
+  --shadow-float: 0 6px 12px -2px rgba(20, 34, 69, .1), 0 24px 60px -12px rgba(31, 45, 90, .25);
+
+  /* ---- Motion ---- */
+  --ease: cubic-bezier(.22, 1, .36, 1);
+  --dur: .35s;
+}
