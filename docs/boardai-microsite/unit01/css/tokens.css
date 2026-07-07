@@ -1,0 +1,107 @@
+/* ============================================================
+   Board AI — unit01 variant · design tokens
+   Base system lifted from the UNIT01® template (BYQ Studio):
+   dark command-center, condensed display type, terminal labels.
+   Board flavor: gradient on live/status elements only.
+   ============================================================ */
+
+/* ---- Fonts (self-hosted, from template) ---- */
+@font-face {
+  font-family: 'SCHABO';
+  src: url('../assets/fonts/SCHABO-Condensed.ttf') format('truetype');
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Instrument Serif';
+  src: url('../assets/fonts/InstrumentSerif-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Instrument Serif';
+  src: url('../assets/fonts/InstrumentSerif-Italic.ttf') format('truetype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: '42dot Sans';
+  src: url('../assets/fonts/42dotSans-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: '42dot Sans';
+  src: url('../assets/fonts/42dotSans-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: '42dot Sans';
+  src: url('../assets/fonts/42dotSans-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Geist Mono U01';
+  src: url('../assets/fonts/GeistMono-Variable.ttf') format('truetype');
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+:root {
+  /* ---- Color: template base ---- */
+  --dark: #0e0e0e;
+  --dark-2: #141414;
+  --dark-3: #1b1b1b;
+  --light: #f1eee6;
+  --light-64: rgba(241, 238, 230, .64);
+  --light-48: rgba(241, 238, 230, .48);
+  --light-32: rgba(241, 238, 230, .32);
+  --light-16: rgba(241, 238, 230, .16);
+  --light-8: rgba(241, 238, 230, .08);
+  --light-4: rgba(241, 238, 230, .04);
+  --accent: #867f76;          /* taupe */
+  --hover-lilac: #d7d3f8;
+  --error: #c94040;
+
+  /* ---- Color: Board flavor (status/live elements only) ---- */
+  --board-azure: #2f7cf6;
+  --board-violet: #6d4df2;
+  --board-cyan: #29c8e0;
+  --board-gradient: linear-gradient(100deg, var(--board-azure), var(--board-violet) 55%, var(--board-cyan));
+  --ok: #4fc98a;
+  --warn: #e0a83a;
+
+  /* ---- Type ---- */
+  --font-display: 'SCHABO', Impact, sans-serif;
+  --font-serif: 'Instrument Serif', Georgia, serif;
+  --font-body: '42dot Sans', Arial, sans-serif;
+  --font-ui: 'Geist Mono U01', ui-monospace, monospace;
+
+  --fs-hero: clamp(5rem, 21vw, 19rem);
+  --fs-display: clamp(3rem, 8.5vw, 8rem);
+  --fs-h2: clamp(2.2rem, 5vw, 4.4rem);
+  --fs-h3: clamp(1.5rem, 2.6vw, 2.2rem);
+  --fs-serif-lead: clamp(1.5rem, 2.6vw, 2.4rem);
+  --fs-body: 1.05rem;
+  --fs-body-lg: 1.25rem;
+  --fs-ui: .82rem;
+
+  /* ---- Layout ---- */
+  --site-pad: clamp(16px, 2.222vw, 32px);
+  --container: 1600px;
+  --section-gap: clamp(90px, 10vw, 170px);
+
+  /* ---- Shape ---- */
+  --radius-1: clamp(16px, 1.667vw, 24px);
+  --radius-2: 8px;
+  --radius-3: 4px;
+  --radius-full: 100vw;
+
+  /* ---- Motion ---- */
+  --ease-u01: cubic-bezier(.6, .05, .1, .95);
+  --dur: .5s;
+}
