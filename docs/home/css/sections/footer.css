@@ -1,0 +1,215 @@
+/* ============================================================
+   Footer — mirrors board.com's structure exactly:
+   link columns → recognition row (heading + rating cards) →
+   legal links + logo → language / copyright / social.
+   ============================================================ */
+
+.site-footer {
+  border-top: 1px solid var(--neutral-50);
+  padding-top: var(--s-6);
+  background: var(--white);
+}
+
+/* --- Row 1: link columns --- */
+.footer-cols {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--s-4);
+  padding-bottom: var(--s-5);
+}
+
+.footer-title {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--navy);
+  margin-bottom: var(--s-3);
+}
+
+.footer-cols ul {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.footer-cols a {
+  font-size: var(--fs-small);
+  color: var(--neutral-500);
+  text-decoration: none;
+}
+
+.footer-cols a:hover {
+  color: var(--navy);
+  text-decoration: underline;
+}
+
+/* --- Row 2: recognition --- */
+.footer-recognition {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  gap: var(--s-5);
+  align-items: center;
+  padding-block: var(--s-5);
+  border-top: 1px solid var(--shade-50);
+}
+
+.footer-recognition-copy h2 {
+  font-size: var(--fs-h3);
+  max-width: 22ch;
+  margin-bottom: var(--s-3);
+}
+
+.footer-rating-cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--s-3);
+}
+
+.footer-rating-card {
+  border: 1px solid var(--neutral-50);
+  border-radius: var(--r-m);
+  padding: var(--s-3) var(--s-4);
+}
+
+.rating-brand {
+  font-weight: 900;
+  font-size: 18px;
+  color: var(--navy);
+}
+
+.rating-stars {
+  color: var(--violet-500);
+  letter-spacing: 2px;
+  font-size: 15px;
+  margin-block: 2px;
+}
+
+.rating-stars .star-half {
+  opacity: 0.35;
+}
+
+.rating-value {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+/* --- Row 3: legal links + logo --- */
+.footer-legal-row {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) auto;
+  gap: var(--s-5);
+  align-items: start;
+  padding-block: var(--s-4);
+  border-top: 1px solid var(--shade-50);
+}
+
+.footer-legal-links {
+  columns: 3;
+  column-gap: var(--s-4);
+}
+
+.footer-legal-links li {
+  margin-bottom: 8px;
+  break-inside: avoid;
+}
+
+.footer-legal-links a {
+  font-size: 13px;
+  color: var(--neutral-500);
+  text-decoration: none;
+}
+
+.footer-legal-links a:hover {
+  color: var(--navy);
+  text-decoration: underline;
+}
+
+.footer-logo img {
+  width: 104px;
+  height: auto;
+}
+
+/* --- Row 4: language / copyright / social --- */
+.footer-bottom {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: var(--s-3);
+  padding-block: var(--s-4);
+  border-top: 1px solid var(--shade-50);
+}
+
+.footer-lang button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--fs-small);
+  color: var(--neutral-500);
+  padding: 6px 12px;
+  border: 1px solid var(--neutral-50);
+  border-radius: var(--r-s);
+}
+
+.footer-lang strong {
+  color: var(--navy);
+}
+
+.footer-copyright {
+  font-size: 13.5px;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.footer-social {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--s-2);
+}
+
+.footer-social a {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--neutral-50);
+  color: var(--twilight-500);
+  font-weight: 900;
+  font-size: 13px;
+  text-decoration: none;
+  transition: background-color var(--dur-response) var(--ease-out);
+}
+
+.footer-social a:hover {
+  background: var(--shade-50);
+}
+
+/* --- Responsive --- */
+@media (max-width: 900px) {
+  .footer-cols {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--s-5) var(--s-4);
+  }
+
+  .footer-recognition {
+    grid-template-columns: 1fr;
+    gap: var(--s-4);
+  }
+
+  .footer-legal-row {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-legal-links {
+    columns: 2;
+  }
+
+  .footer-bottom {
+    grid-template-columns: 1fr;
+    justify-items: start;
+  }
+
+  .footer-social {
+    justify-content: flex-start;
+  }
+}

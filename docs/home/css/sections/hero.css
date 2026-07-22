@@ -1,0 +1,435 @@
+/* ============================================================
+   Hero — prominent navy blob (brand gradient rim), white copy
+   on the blob, product-artifact cards side by side on the right.
+   ============================================================ */
+
+.hero {
+  position: relative;
+  padding-top: calc(72px + var(--s-5));
+  padding-bottom: var(--s-6);
+  overflow: hidden;
+  background: var(--white);
+  /* match the shape's height so its bottom curve isn't clipped (885px @1440) */
+  min-height: clamp(560px, 61.4vw, 1000px);
+  display: grid;
+  align-items: center;
+}
+
+/* Hero runs on the reference's wider 72px-margin grid */
+.hero-inner {
+  max-width: 1296px;
+}
+
+/* --- The exact Figma "Home Shape", running behind the nav (takeover).
+       Injected inline by hero.js so its gradients can be animated.
+       Stretched to full-bleed width; the organic forms absorb the
+       mild horizontal stretch invisibly. --- */
+.hero-shape {
+  position: absolute;
+  inset: 0 0 auto 0;
+  pointer-events: none;
+  line-height: 0;
+}
+
+.hero-shape svg {
+  width: 100%;
+  height: clamp(560px, 61.4vw, 1000px); /* 885/1440 of viewport width */
+}
+
+/* --- Layout --- */
+.hero-inner {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 656px) minmax(0, 1fr);
+  gap: var(--s-5);
+  align-items: center;
+  width: 100%;
+}
+
+.hero-copy {
+  padding-block: var(--s-5);
+}
+
+/* Copy sits on the gradient shape: on-dark palette */
+.hero-copy h1 {
+  color: var(--white);
+  font-size: clamp(40px, 4.6vw, 66px);
+  line-height: 1.09;
+}
+
+.hero-lead {
+  color: rgba(255, 255, 255, 0.88);
+  margin-top: var(--s-4);
+  max-width: 52ch;
+}
+
+.hero-ctas {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-4);
+  margin-top: var(--s-5);
+}
+
+/* White arrow text-link (reference: "Lorem ipsum dolor sit amet ›") */
+.hero-arrow-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--white);
+  font-size: var(--fs-button);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.hero-arrow-link svg {
+  transition: transform var(--dur-response) var(--ease-snap);
+}
+
+.hero-arrow-link:hover svg {
+  transform: translateX(4px);
+}
+
+/* --- Product artifact cluster: side by side --- */
+.hero-artifact {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr);
+  gap: var(--s-3);
+  align-items: start;
+}
+
+.hero-card {
+  background: rgba(255, 255, 255, 0.92);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(20, 34, 69, 0.07);
+  border-radius: var(--r-m);
+  box-shadow: var(--shadow-lifted);
+  will-change: transform;
+  transition: box-shadow var(--dur-response) var(--ease-out);
+}
+
+/* Chat card */
+.chat-card {
+  padding: var(--s-4);
+}
+
+.chat-head {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  padding-bottom: var(--s-3);
+  border-bottom: 1px solid var(--shade-50);
+}
+
+/* Agent identity icon (the gradient agent marks from the AI console) */
+.agent-icon {
+  width: 36px;
+  height: 36px;
+  flex: none;
+}
+
+.chat-title {
+  font-weight: 700;
+  font-size: var(--fs-small);
+  line-height: 1.3;
+}
+
+.chat-status {
+  font-size: 12.5px;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--aquamarine-500);
+}
+
+.chat-replay {
+  margin-left: auto;
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--neutral-400);
+  transition:
+    color var(--dur-response) var(--ease-out),
+    transform 400ms var(--ease-snap);
+}
+
+.chat-replay:hover {
+  color: var(--twilight-500);
+  transform: rotate(-180deg);
+}
+
+/* Fixed height: the card never grows while conversations type.
+   Scripts are written to fit; anything longer clips gracefully. */
+.chat-thread {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+  padding-top: var(--s-3);
+  height: 268px;
+  overflow: hidden;
+}
+
+/* --- Agent switcher: site-level segmented control above the cards --- */
+.agent-switcher {
+  grid-column: 1 / -1;
+  justify-self: start;
+  display: inline-flex;
+  gap: var(--s-1);
+  padding: 5px;
+  border-radius: var(--r-pill);
+  background: rgba(255, 255, 255, 0.55);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  box-shadow: var(--shadow-lightest);
+}
+
+.agent-seg {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 16px;
+  border-radius: var(--r-pill);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--twilight-500);
+  overflow: hidden;
+  transition:
+    color var(--dur-response) var(--ease-out),
+    background-color var(--dur-response) var(--ease-out),
+    box-shadow var(--dur-response) var(--ease-out);
+}
+
+.agent-seg img {
+  width: 18px;
+  height: 18px;
+  filter: grayscale(1) opacity(0.6);
+  transition: filter var(--dur-response) var(--ease-out);
+}
+
+.agent-seg:hover {
+  background: rgba(255, 255, 255, 0.75);
+  color: var(--navy);
+}
+
+.agent-seg.is-active {
+  background: var(--white);
+  color: var(--navy);
+  box-shadow: 0 2px 10px rgba(20, 34, 69, 0.12);
+}
+
+.agent-seg.is-active img {
+  filter: none;
+}
+
+/* Auto-rotation progress along the active segment's bottom edge */
+.seg-progress {
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: 3px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--agent-hue, var(--teal-500));
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+/* --- Agent hue theming across both cards --- */
+.hero-artifact {
+  --agent-hue: var(--teal-500);
+}
+
+.status-dot {
+  background: var(--agent-hue);
+}
+
+.metric-chip .metric-value {
+  color: var(--agent-hue);
+}
+
+.msg {
+  max-width: 92%;
+  padding: 9px 13px;
+  border-radius: var(--r-m);
+  font-size: 13.5px;
+  line-height: 1.5;
+  opacity: 0;
+  transform: translateY(8px);
+  transition:
+    opacity 300ms var(--ease-out),
+    transform 300ms var(--ease-out);
+}
+
+.msg.visible {
+  opacity: 1;
+  transform: none;
+}
+
+.msg-user {
+  align-self: flex-end;
+  background: var(--twilight-500);
+  color: var(--white);
+  border-bottom-right-radius: var(--r-s);
+}
+
+.msg-agent {
+  align-self: flex-start;
+  background: var(--shade-50);
+  color: var(--navy);
+  border-bottom-left-radius: var(--r-s);
+}
+
+.msg .caret {
+  display: inline-block;
+  width: 1px;
+  height: 1em;
+  background: var(--twilight-500);
+  vertical-align: -0.15em;
+  animation: caret-blink 0.9s steps(2) infinite;
+}
+
+@keyframes caret-blink {
+  50% { opacity: 0; }
+}
+
+.metric-chip {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-top: 8px;
+  padding: 5px 11px;
+  border-radius: var(--r-s);
+  background: var(--white);
+  border: 1px solid rgba(20, 34, 69, 0.1);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.metric-chip .metric-value {
+  font-size: 14px;
+  font-weight: 900;
+}
+
+.metric-chip .metric-delta-down {
+  color: var(--danger);
+  font-weight: 700;
+}
+
+.metric-chip .metric-delta-up {
+  color: var(--success);
+  font-weight: 700;
+}
+
+/* Chart card — offset down for a clustered composition */
+.chart-card {
+  padding: var(--s-4);
+  margin-top: 96px;
+}
+
+.chart-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-2);
+  margin-bottom: var(--s-3);
+}
+
+.chart-title {
+  font-weight: 700;
+  font-size: var(--fs-small);
+}
+
+.chart-badge {
+  font-size: 11.5px;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.chart-wrap {
+  position: relative;
+}
+
+.forecast-chart {
+  width: 100%;
+  height: auto;
+}
+
+.chart-tip {
+  position: absolute;
+  transform: translate(-50%, -130%);
+  background: var(--navy);
+  color: var(--white);
+  font-size: 12px;
+  font-weight: 700;
+  padding: 5px 10px;
+  border-radius: var(--r-s);
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.chart-tip::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -4px;
+  transform: translateX(-50%) rotate(45deg);
+  width: 8px;
+  height: 8px;
+  background: var(--navy);
+}
+
+/* --- Responsive --- */
+@media (max-width: 1080px) {
+  /* The shape's fixed aspect can't cover stacked copy reliably —
+     the hero goes full gradient and the shape steps aside.
+     (Proper mobile composition lands in the responsive pass.) */
+  .hero {
+    background: linear-gradient(150deg, var(--violet-500) -10%, var(--twilight-500) 45%, var(--teal-500) 110%);
+  }
+
+  .hero-shape {
+    display: none;
+  }
+
+  .hero-inner {
+    grid-template-columns: 1fr;
+    gap: var(--s-5);
+  }
+
+  .hero-copy {
+    padding-block: var(--s-4) 0;
+    max-width: 620px;
+  }
+
+  /* Artifacts stay side by side below the copy */
+  .hero-artifact {
+    max-width: 760px;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero-artifact {
+    grid-template-columns: 1fr;
+  }
+
+  .chart-card {
+    margin-top: 0;
+  }
+
+  .chat-thread {
+    min-height: 230px;
+  }
+}

@@ -1,0 +1,100 @@
+/* ============================================================
+   5.7 Customer proof — the page's one dark navy band (earned:
+   it carries the agent story). Gradient keyline on entry,
+   wave divider out.
+   ============================================================ */
+
+.proof {
+  position: relative;
+  background: var(--navy);
+  color: var(--white);
+}
+
+.proof-keyline {
+  height: 3px;
+  background: var(--grad-secondary);
+}
+
+.proof-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: var(--s-6);
+  align-items: center;
+  padding-block: var(--s-6);
+}
+
+.proof-copy h2 {
+  color: var(--white);
+  font-size: var(--fs-h2);
+}
+
+.proof-copy p {
+  margin-top: var(--s-4);
+  color: var(--neutral-100);
+  max-width: 48ch;
+}
+
+.eyebrow-on-dark {
+  color: var(--aquamarine-500);
+}
+
+.text-link-on-dark {
+  color: var(--sky-300);
+  margin-top: var(--s-4);
+}
+
+/* --- Video card --- */
+.video-card {
+  position: relative;
+  border-radius: var(--r-m);
+  overflow: hidden;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+  aspect-ratio: 16 / 9;
+  background: var(--navy-800);
+}
+
+.proof-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.video-play {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: var(--navy);
+  background: rgba(255, 255, 255, 0.92);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  transition: transform var(--dur-response) var(--ease-snap);
+}
+
+.video-play:hover {
+  transform: scale(1.08);
+}
+
+.video-play svg {
+  margin-left: 3px;
+}
+
+/* --- Wave out of the dark band --- */
+.proof-wave {
+  display: block;
+  height: clamp(40px, 6vw, 90px);
+  background: var(--white);
+}
+
+@media (max-width: 900px) {
+  .proof-inner {
+    grid-template-columns: 1fr;
+    gap: var(--s-5);
+  }
+}

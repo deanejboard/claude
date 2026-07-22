@@ -1,0 +1,98 @@
+/* ============================================================
+   Board — Design Tokens
+   Source of truth: Board web design-system library
+   ("New Brand Assets for the Web", Figma QkiO3ls2MFyV7TBDugDYH6)
+   ============================================================ */
+
+:root {
+  /* --- Brand hues (hard constraints) --- */
+  --navy: #142245;          /* Primary / dark surfaces. Agent moments only for full-dark sections */
+  --twilight-500: #253e7d;  /* Icon strokes, secondary dark */
+  --teal-500: #0c9995;
+  --sky-500: #32bef0;
+  --aquamarine-500: #46eeaa;
+  --violet-500: #8739e4;
+  --shade-50: #f7f8fa;
+  --white: #ffffff;
+
+  /* --- BoardFlow system ramps (BoardFlow Web Design System V1) ---
+     twilight = BoardBlue · sky = BoardLightBlue · teal = BoardDarkGreen ·
+     aquamarine = green-500 · navy = Primary/BoardBlue-800 */
+  --sky-100: #cff4fc;   /* BoardLightBlue-100 */
+  --sky-200: #b3e7f9;   /* light blue-200 */
+  --sky-300: #76d3f5;   /* BoardLightBlue-300 */
+  --sky-600: #2eadda;   /* BoardLightBlue-600 */
+  --sky-700: #2487aa;   /* BoardLightBlue-700 — AA-safe sky for large text on white */
+  --sky-500-a50: rgba(50, 190, 240, 0.5); /* two-tone icon fill */
+  --blue-400: #516597;  /* BoardBlue-400 */
+  --violet-700: #6028a2; /* BoardViolet-700 — demo button hover */
+  --violet-800: #4a1f7d; /* BoardViolet-800 */
+  --aquamarine-100: #d3fbea;
+  --teal-100: #b4dfde;  /* BoardDarkGreen-100 */
+  --orange: #f2882d;    /* BoardOrange (accent reserve) */
+  --success: #28a745;
+  --danger: #dc3545;
+  --neutral-50: #e9ebf8;
+  --neutral-100: #cccfd9;
+  --neutral-200: #b4b8c6;
+  --neutral-300: #9298ad;
+  --neutral-400: #7d849d;
+  --neutral-500: #5c6584;  /* BoardNeutral */
+  --neutral-700: #41485e;
+  --neutral-900: #272a37;
+  --navy-800: #101a35;     /* BoardBlue-900 — deepest dark surface */
+
+  /* --- Text --- */
+  --text-heading: var(--navy);
+  --text-body: var(--navy);
+  --text-muted: var(--neutral-500);
+  --text-on-dark: var(--white);
+
+  /* --- Gradients (brand pillar) --- */
+  --grad-primary: linear-gradient(115deg, var(--navy) 0%, var(--violet-500) 55%, var(--sky-500) 100%);
+  --grad-secondary: linear-gradient(115deg, var(--aquamarine-500) 0%, var(--sky-500) 45%, var(--violet-500) 100%);
+  /* text gradient stays ≥3:1 on white across its whole run (large-text AA) */
+  --grad-text: linear-gradient(100deg, var(--twilight-500) 0%, var(--violet-500) 55%, var(--sky-700) 100%);
+  --grad-wash: radial-gradient(60% 80% at 20% 20%, rgba(70, 238, 170, 0.14), transparent 70%),
+               radial-gradient(50% 70% at 80% 10%, rgba(50, 190, 240, 0.16), transparent 70%),
+               radial-gradient(45% 60% at 60% 60%, rgba(135, 57, 228, 0.10), transparent 70%);
+
+  /* --- Spacing --- */
+  --s-1: 4px;
+  --s-2: 8px;
+  --s-3: 16px;
+  --s-4: 24px;
+  --s-5: 48px;
+  --s-6: 96px;   /* section padding */
+
+  /* --- Radius --- */
+  --r-s: 8px;
+  --r-m: 16px;
+  --r-pill: 999px;
+
+  /* --- Elevation --- */
+  --shadow-lightest: 0 4px 24px rgba(20, 34, 69, 0.08);
+  --shadow-lifted: 0 12px 40px rgba(20, 34, 69, 0.14);
+
+  /* --- Type ramp (Satoshi only) --- */
+  --font: "Satoshi", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --fs-display: clamp(40px, 4.4vw, 62px);
+  --fs-h2: clamp(30px, 2.9vw, 40px);
+  --fs-h3: clamp(23px, 2vw, 28px);
+  --fs-h4: 20px;
+  --fs-body: 18px;
+  --fs-small: 15px;
+  --fs-button: 15px;
+  --lh-display: 1.1;
+  --lh-heading: 1.2;
+  --lh-body: 1.6;
+
+  /* --- Motion --- */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);       /* entrances */
+  --ease-snap: cubic-bezier(0.34, 1.4, 0.64, 1);    /* response / joy layer */
+  --dur-response: 200ms;
+
+  /* --- Layout --- */
+  --container: 1200px;
+  --container-pad: 24px;
+}

@@ -1,0 +1,125 @@
+/* ============================================================
+   5.6 Trust band (register: minimal) — fine line illustrations,
+   1px navy strokes, dotted construction lines. The only motion
+   is the strokes drawing themselves in.
+   ============================================================ */
+
+.trust {
+  background: var(--white);
+}
+
+.trust-cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--s-4);
+}
+
+.trust-card {
+  background: var(--shade-50);
+  border-radius: var(--r-m);
+  padding: var(--s-4) var(--s-4) var(--s-5);
+}
+
+.trust-illo {
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+  margin-inline: auto;
+  margin-bottom: var(--s-3);
+  overflow: visible;
+}
+
+/* Illustration-icon primitives: gradient structural line (thick/thin),
+   two-tone focal icon, faint dotted construction guides. */
+.trust-illo .il-g {
+  stroke: url(#flow);
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.trust-illo .il-ink {
+  fill: none;
+  stroke: var(--navy);
+  stroke-width: 1.9;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.trust-illo .il-fill {
+  fill: var(--sky-300);
+}
+
+.trust-illo .il-faint {
+  stroke: #a6b2ea;
+  fill: none;
+  stroke-width: 1;
+  opacity: 0.55;
+}
+
+.trust-illo .il-nodedot {
+  fill: var(--white);
+  stroke: var(--navy);
+  stroke-width: 2;
+}
+
+.trust-card h3 {
+  font-size: var(--fs-h4);
+}
+
+.trust-card p {
+  font-size: var(--fs-small);
+  color: var(--text-muted);
+  margin-top: var(--s-2);
+}
+
+/* --- Analyst recognition row --- */
+.analyst-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--s-4);
+  margin-top: var(--s-5);
+}
+
+.analyst-row li {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-1);
+  padding: var(--s-3) var(--s-4);
+  border: 1px solid var(--neutral-50);
+  border-radius: var(--r-m);
+}
+
+.analyst-row strong {
+  font-size: 17px;
+  color: var(--navy);
+}
+
+.analyst-row span {
+  font-size: 13.5px;
+  color: var(--text-muted);
+  line-height: 1.45;
+}
+
+@media (max-width: 860px) {
+  .trust-cards,
+  .analyst-row {
+    grid-template-columns: 1fr;
+  }
+
+  .trust-card {
+    display: grid;
+    grid-template-columns: 130px 1fr;
+    gap: 0 var(--s-4);
+    align-items: center;
+  }
+
+  .trust-illo {
+    grid-row: span 2;
+    margin: 0;
+  }
+
+  .trust-card h3 {
+    align-self: end;
+  }
+}

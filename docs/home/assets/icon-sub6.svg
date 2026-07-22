@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="77" height="77" viewBox="0 0 77 77" fill="none">
+  <!-- HR / workforce glyph drawn to sit with the Figma sub-solution icon family -->
+  <circle cx="30" cy="27" r="9.5" fill="#1FAC9A"/>
+  <path d="M13 56c1.7-9.6 8.6-15.5 17-15.5S45.3 46.4 47 56c.2 1.1-.7 2-1.8 2H14.8c-1.1 0-2-.9-1.8-2z" fill="#1FAC9A"/>
+  <circle cx="51" cy="31" r="7.5" fill="#46EEAA"/>
+  <path d="M42.5 44.6c2.5-1.7 5.4-2.6 8.5-2.6 7 0 12.8 4.9 14.2 12.9.2 1.1-.7 2.1-1.8 2.1H51.5c-.4-5-3.9-9.8-9-12.4z" fill="#46EEAA"/>
+  <rect x="56" y="14" width="4" height="10" rx="2" fill="#90F5CC"/>
+  <rect x="63" y="10" width="4" height="14" rx="2" fill="#46EEAA"/>
+</svg>

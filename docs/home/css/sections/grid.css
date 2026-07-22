@@ -1,0 +1,179 @@
+/* ============================================================
+   5.5 Capability grid — heterogeneous bento.
+   Exactly one interactive tile (sparkline), one ambient tile
+   (particle field), one photo, one colour-pop; the rest quiet.
+   ============================================================ */
+
+.capgrid {
+  background: var(--shade-50);
+}
+
+.cap-tiles {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--s-4);
+}
+
+.cap-tile {
+  position: relative;
+  background: var(--white);
+  border-radius: var(--r-m);
+  box-shadow: var(--shadow-lightest);
+  padding: var(--s-4);
+  overflow: hidden;
+  transition:
+    transform var(--dur-response) var(--ease-snap),
+    box-shadow var(--dur-response) var(--ease-out);
+}
+
+.cap-tile:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lifted);
+}
+
+.cap-tile h3 {
+  font-size: var(--fs-h4);
+  margin-top: var(--s-3);
+}
+
+.cap-tile p {
+  font-size: var(--fs-small);
+  color: var(--text-muted);
+  margin-top: var(--s-2);
+}
+
+.cap-tile .icon-2t {
+  width: 56px;
+  height: 56px;
+}
+
+/* Ambient tile: soft particle field behind content */
+.tile-ambient {
+  grid-column: span 2;
+}
+
+.tile-field {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.tile-ambient .tile-body {
+  position: relative;
+}
+
+/* Interactive tile: scrubbable always-updating sparkline */
+.tile-interactive {
+  grid-column: span 2;
+}
+
+.spark-wrap {
+  position: relative;
+  margin-top: var(--s-3);
+  border-radius: var(--r-s);
+  background: var(--shade-50);
+  padding: var(--s-3);
+  cursor: crosshair;
+}
+
+.sparkline {
+  width: 100%;
+  height: 96px;
+}
+
+.spark-readout {
+  position: absolute;
+  top: var(--s-2);
+  right: var(--s-3);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+}
+
+.spark-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--neutral-400);
+}
+
+.spark-value {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--twilight-500);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Autoplaying video thumbnail tile */
+.tile-video {
+  padding: 0;
+  min-height: 260px;
+}
+
+.tile-video-media {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.tile-video-overlay {
+  position: absolute;
+  inset: auto 0 0 0;
+  padding: var(--s-4);
+  background: linear-gradient(transparent, rgba(20, 34, 69, 0.85));
+}
+
+.tile-video-overlay h3 {
+  color: var(--white);
+  margin: 0;
+}
+
+.tile-video-link {
+  color: var(--sky-300);
+  margin-top: var(--s-1);
+}
+
+/* Gradient-text signature moment lives in this section's head */
+.grid-signature {
+  font-size: clamp(26px, 2.6vw, 36px);
+  line-height: 1.15;
+  margin-bottom: var(--s-2);
+}
+
+/* Colour-pop tile */
+.tile-pop {
+  background: var(--aquamarine-500);
+}
+
+.tile-pop h3,
+.tile-pop p {
+  color: var(--navy);
+}
+
+.tile-pop p {
+  color: rgba(20, 34, 69, 0.75);
+}
+
+/* --- Responsive --- */
+@media (max-width: 1000px) {
+  .cap-tiles {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 560px) {
+  .cap-tiles {
+    grid-template-columns: 1fr;
+  }
+
+  .tile-ambient,
+  .tile-interactive {
+    grid-column: auto;
+  }
+}

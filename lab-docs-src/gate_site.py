@@ -27,6 +27,7 @@ MARKER = "<!-- board-gated v1 -->"
 # Pages to gate (relative to docs/). boardai-microsite already has its own gate.
 PAGES = [
     "index.html",
+    "home/index.html",
     "board-illustration-system/index.html",
     "image-card-grid/index.html",
     "partner-award-badges/index.html",

@@ -1,0 +1,207 @@
+/* ============================================================
+   Solutions — cube navigator v2.
+   40/60: slim copy + detail panel left; cube + icon pills right.
+   Pieces = the cube's own face geometry (exact hover/click).
+   Hover previews the panel; click pins. No purple: tints stay
+   in the blue/teal family, text stays navy.
+   ============================================================ */
+
+.platform {
+  background: var(--white);
+}
+
+.platform-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); /* 40 / 60 */
+  gap: var(--s-5);
+  align-items: center;
+}
+
+/* --- Detail panel (kept deliberately light on text) --- */
+.area-panel {
+  margin-top: var(--s-4);
+  border-top: 1px solid var(--shade-50);
+  padding-top: var(--s-4);
+  min-height: 300px; /* hover previews must not reflow the page */
+}
+
+.area-title {
+  font-size: var(--fs-h3);
+  color: var(--navy);
+}
+
+.area-hint {
+  margin-top: var(--s-3);
+  font-size: 13px;
+  color: var(--neutral-400);
+}
+
+.area-solutions {
+  display: flex;
+  flex-direction: column;
+  margin-top: var(--s-2);
+}
+
+.area-solutions li {
+  border-bottom: 1px solid var(--shade-50);
+}
+
+.area-solutions a,
+.area-solutions span {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  padding: 9px 2px;
+  font-size: var(--fs-small);
+  font-weight: 600;
+  color: var(--navy);
+  text-decoration: none;
+}
+
+.area-solutions a:hover {
+  color: var(--twilight-500);
+}
+
+.area-solutions a::after {
+  content: "→";
+  margin-left: auto;
+  color: var(--neutral-200);
+  transition:
+    color var(--dur-response) var(--ease-out),
+    transform var(--dur-response) var(--ease-snap);
+}
+
+.area-solutions a:hover::after {
+  color: var(--twilight-500);
+  transform: translateX(3px);
+}
+
+.area-solutions span {
+  color: var(--neutral-500);
+  font-weight: 500;
+}
+
+.area-link {
+  margin-top: var(--s-3);
+}
+
+/* --- Diagram: cube + icon pills --- */
+.platform-diagram {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(230px, 264px);
+  gap: var(--s-4);
+  align-items: center;
+}
+
+.cube-stage {
+  position: relative;
+  display: grid;
+  place-items: center;
+}
+
+.cube-stage svg {
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  overflow: visible;
+  /* one clean grounding shadow instead of the asset's four stacked ones */
+  filter: drop-shadow(0 22px 30px rgba(20, 34, 69, 0.14));
+}
+
+/* Interactive pieces: the cube's own faces, invisible at rest.
+   Hover/selection tints the piece; multiply keeps the shading. */
+.cube-piece {
+  cursor: pointer;
+  outline: none;
+}
+
+.cube-piece path {
+  fill: var(--piece-hue, var(--sky-500));
+  opacity: 0;
+  mix-blend-mode: multiply;
+  transition: opacity 180ms var(--ease-out);
+  pointer-events: visiblePainted;
+}
+
+.cube-piece.is-hover path,
+.cube-piece:focus-visible path {
+  opacity: 0.38;
+}
+
+.cube-piece.is-active path {
+  opacity: 0.5;
+}
+
+/* --- Icon pills (the sub-solution icon family) --- */
+.area-pills {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+}
+
+.area-pill {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  text-align: left;
+  padding: 9px 16px 9px 10px;
+  background: var(--white);
+  border: 1px solid rgba(20, 34, 69, 0.08);
+  border-radius: var(--r-pill);
+  box-shadow: var(--shadow-lightest);
+  font-size: 13.5px;
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--navy);
+  transition:
+    transform var(--dur-response) var(--ease-snap),
+    border-color var(--dur-response) var(--ease-out),
+    box-shadow var(--dur-response) var(--ease-out);
+}
+
+.area-pill img {
+  width: 34px;
+  height: 34px;
+  flex: none;
+}
+
+.area-pill:hover,
+.area-pill.is-hover {
+  transform: translateX(4px);
+  border-color: rgba(20, 34, 69, 0.2);
+  box-shadow: var(--shadow-lifted);
+}
+
+.area-pill.is-active {
+  border-color: var(--twilight-500);
+  box-shadow:
+    0 0 0 1px var(--twilight-500),
+    var(--shadow-lifted);
+  transform: translateX(4px);
+}
+
+/* --- Responsive --- */
+@media (max-width: 1000px) {
+  .platform-inner {
+    grid-template-columns: 1fr;
+    gap: var(--s-5);
+  }
+
+  .platform-diagram {
+    order: -1;
+  }
+
+  .area-panel {
+    min-height: 0;
+  }
+}
+
+@media (max-width: 720px) {
+  .platform-diagram {
+    grid-template-columns: 1fr;
+  }
+
+  .cube-stage svg {
+    max-width: 340px;
+  }
+}
