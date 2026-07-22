@@ -1,4 +1,4 @@
-# lab-docs-src — build tooling for the gated Boardflow Lab docs
+# lab-docs-src — build tooling for the gated BoardFlow Labs docs
 
 Generates the password-gated documentation viewer served at `docs/lab-docs/`
 (https://deanejboard.github.io/claude/lab-docs/).

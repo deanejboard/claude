@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Build the Boardflow Lab docs viewer in two forms from one template:
+Build the BoardFlow Labs docs viewer in two forms from one template:
 
   * docs/lab-docs/index.html   -> DEPLOYED, password-gated. The three docs are
                                   AES-GCM encrypted into the page (decrypted in

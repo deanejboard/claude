@@ -61,7 +61,7 @@ WRAPPER = """<!DOCTYPE html>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="robots" content="noindex" />
-<title>Boardflow Lab — protected</title>
+<title>BoardFlow Labs — protected</title>
 <link rel="preconnect" href="https://api.fontshare.com" />
 <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,700,900&display=swap" rel="stylesheet" />
 <style>
@@ -96,7 +96,7 @@ WRAPPER = """<!DOCTYPE html>
   <div class="gate" id="gate">
     <form class="card" id="card">
       <div class="dot"></div>
-      <div class="h">Boardflow Lab</div>
+      <div class="h">BoardFlow Labs</div>
       <div class="t">Enter the password to continue.</div>
       <input id="pw" type="password" autocomplete="current-password" placeholder="Password" aria-label="Password" />
       <button type="submit">Unlock</button>
