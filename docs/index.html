@@ -1,56 +1,82 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Board — Web Marketing Mockups</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;700;800;900&display=swap" rel="stylesheet">
+<!-- board-gated v1 -->
+<html lang="en"><head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex" />
+<title>Board Creative Lab — protected</title>
+<link rel="preconnect" href="https://api.fontshare.com" />
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,700,900&display=swap" rel="stylesheet" />
 <style>
-  :root{--navy:#142245;--neutral:#5c6584;--border:#bbc3d7;--bg-soft:#f7f8fb;}
-  *{box-sizing:border-box;margin:0;padding:0;}
-  body{font-family:'Mulish',-apple-system,sans-serif;color:var(--navy);background:var(--bg-soft);-webkit-font-smoothing:antialiased;line-height:1.5;min-height:100vh;}
-  .wrap{max-width:880px;margin:0 auto;padding:72px 32px;}
-  .eyebrow{font-weight:800;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:var(--neutral);margin-bottom:12px;}
-  h1{font-weight:900;font-size:40px;letter-spacing:-.5px;margin-bottom:14px;}
-  .sub{font-size:17px;color:var(--neutral);max-width:560px;margin-bottom:44px;}
-  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px;}
-  a.card{display:block;text-decoration:none;background:#fff;border:1px solid var(--border);border-radius:14px;padding:26px;transition:.2s;}
-  a.card:hover{transform:translateY(-3px);box-shadow:0 14px 34px rgba(20,34,69,.12);border-color:var(--navy);}
-  .card h2{font-size:19px;font-weight:800;margin-bottom:6px;}
-  .card p{font-size:14px;color:var(--neutral);}
-  .card .meta{margin-top:16px;font-size:12px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:#0c8f6c;}
-  footer{margin-top:56px;font-size:13px;color:var(--neutral);}
+  :root { --flow: linear-gradient(100deg,#253e7d 0%,#8739e4 55%,#32bef0 100%); --violet:#8739e4; }
+  * { box-sizing: border-box; }
+  html,body { margin:0; height:100%; }
+  body { font-family:"Satoshi",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    background: radial-gradient(120% 120% at 50% 0%, #10214a 0%, #0a1330 60%, #070d20 100%);
+    color:#eaf0ff; }
+  .gate { position:fixed; inset:0; display:none; place-items:center; padding:20px; }
+  .gate.show { display:grid; }
+  .card { width:min(400px,92vw); background:rgba(255,255,255,0.04);
+    border:1px solid rgba(166,178,234,0.24); border-radius:16px; padding:2.6rem 2.4rem;
+    text-align:center; backdrop-filter:blur(8px); }
+  .dot { width:16px; height:16px; border-radius:50%; margin:0 auto 1.1rem; background:var(--flow);
+    box-shadow:0 0 24px rgba(135,57,228,.5); }
+  .h { font-weight:900; font-size:1.15rem; letter-spacing:-.2px; }
+  .t { color:#a6b2ea; font-size:.9rem; margin:.35rem 0 1.7rem; }
+  input { width:100%; box-sizing:border-box; padding:.8rem 1rem; font-size:1rem;
+    border:1px solid rgba(166,178,234,0.3); border-radius:10px; background:rgba(255,255,255,0.06); color:#fff; }
+  input:focus { outline:2px solid var(--violet); }
+  button { width:100%; margin-top:1rem; padding:.85rem; font-size:1rem; font-weight:800; border:0;
+    border-radius:999px; background:var(--flow); color:#fff; cursor:pointer; letter-spacing:.2px; }
+  button:hover { filter:brightness(1.06); }
+  .err { color:#ff9db0; font-size:.85rem; min-height:1.2em; margin-top:.8rem; }
+  .shake { animation:shk .4s; }
+  @keyframes shk { 0%,100%{transform:none} 20%,60%{transform:translateX(-7px)} 40%,80%{transform:translateX(7px)} }
+  noscript { display:block; text-align:center; padding-top:30vh; color:#a6b2ea; }
 </style>
-</head>
-<body>
-  <div class="wrap">
-    <div class="eyebrow">Board · Web Marketing</div>
-    <h1>Mockups</h1>
-    <p class="sub">Live, shareable prototypes for web marketing requests. Each card opens a self-contained mockup.</p>
-    <div class="grid">
-      <a class="card" href="board-illustration-system/">
-        <h2>Illustration Icon System</h2>
-        <p>The full bridge: two-tone icons → concept illustration → decorative illustrations (expanded &amp; card). Gradient/navy + light/dark toggles.</p>
-        <div class="meta">View system →</div>
-      </a>
-      <a class="card" href="image-card-grid/">
-        <h2>Image Card Grid — Block Brief &amp; Demo</h2>
-        <p>The generalised, configurable block (grid / carousel, all options) with a live demo. Badges are one preset.</p>
-        <div class="meta">View brief + demo →</div>
-      </a>
-      <a class="card" href="partner-award-badges-final/">
-        <h2>Partner Award Badges — Final Direction</h2>
-        <p>The chosen approach and the two year variations to build: year in the badge, and year as text.</p>
-        <div class="meta">View direction →</div>
-      </a>
-      <a class="card" href="partner-award-badges/">
-        <h2>Partner Award Badges — All Options (reference)</h2>
-        <p>The full A–E exploration that led to the chosen direction. Kept for reference.</p>
-        <div class="meta">View options →</div>
-      </a>
-    </div>
-    <footer>Internal prototypes. Updated via the <code>claude</code> repo (<code>/docs</code>) → GitHub Pages.</footer>
+</head><body>
+  <noscript>This page requires JavaScript to unlock.</noscript>
+  <div class="gate" id="gate">
+    <form class="card" id="card">
+      <div class="dot"></div>
+      <div class="h">Board Creative Lab</div>
+      <div class="t">Enter the password to continue.</div>
+      <input id="pw" type="password" autocomplete="current-password" placeholder="Password" aria-label="Password" />
+      <button type="submit">Unlock</button>
+      <div class="err" id="err"></div>
+    </form>
   </div>
-</body>
-</html>
+<script>
+  var PAYLOAD = {"salt": "X6HR2hxLKqZOrrPfE1umdQ==", "iv": "r+2dN0ntvur3jFUj", "ct": "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", "iter": 200000};
+  var KEY = "board-lab-pw";
+  function b(s){ return Uint8Array.from(atob(s), function(c){ return c.charCodeAt(0); }); }
+  async function decrypt(pw){
+    var salt=b(PAYLOAD.salt), iv=b(PAYLOAD.iv), ct=b(PAYLOAD.ct);
+    var km=await crypto.subtle.importKey("raw", new TextEncoder().encode(pw), "PBKDF2", false, ["deriveKey"]);
+    var key=await crypto.subtle.deriveKey({name:"PBKDF2",salt:salt,iterations:PAYLOAD.iter,hash:"SHA-256"},
+      km, {name:"AES-GCM",length:256}, false, ["decrypt"]);
+    var pt=await crypto.subtle.decrypt({name:"AES-GCM",iv:iv}, key, ct);
+    return new TextDecoder().decode(pt);
+  }
+  function reveal(html){ document.open(); document.write(html); document.close(); }
+  async function unlock(pw, remember){
+    var html = await decrypt(pw);
+    if (remember) { try { localStorage.setItem(KEY, pw); } catch(e){} }
+    reveal(html);
+  }
+  (async function(){
+    var saved=null; try { saved=localStorage.getItem(KEY); } catch(e){}
+    if (saved) { try { await unlock(saved, false); return; } catch(e) { try{localStorage.removeItem(KEY);}catch(_){} } }
+    var gate=document.getElementById("gate"); gate.classList.add("show");
+    var pw=document.getElementById("pw"), err=document.getElementById("err"), card=document.getElementById("card");
+    setTimeout(function(){ pw.focus(); }, 50);
+    card.addEventListener("submit", function(e){
+      e.preventDefault(); err.textContent="";
+      unlock(pw.value, true).catch(function(){
+        err.textContent="Incorrect password.";
+        card.classList.remove("shake"); void card.offsetWidth; card.classList.add("shake"); pw.select();
+      });
+    });
+  })();
+</script>
+</body></html>

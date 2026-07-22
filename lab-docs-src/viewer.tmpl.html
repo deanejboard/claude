@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex" />
+<title>Board Creative Lab — Documentation</title>
+<meta name="description" content="The Board Creative Lab docs: AGENTS.md (operating manual), DESIGN.md (design direction), and the illustration-icon system." />
+<link rel="preconnect" href="https://api.fontshare.com" />
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --flow: linear-gradient(100deg, #253e7d 0%, #8739e4 55%, #32bef0 100%);
+    --navy: #142245; --twilight: #253e7d; --violet: #8739e4; --sky: #32bef0;
+    --bg: #f7f8fa; --surface: #ffffff; --surface-2: #fbfcfe;
+    --text: #142245; --muted: #5c6584; --border: #e9ebf8; --border-strong: #d5d9ec;
+    --code-bg: #f3f5fc; --code-text: #2a3357; --link: #6028a2; --link-hover: #8739e4;
+    --sidebar-w: 288px; --toc-w: 220px; --topbar-h: 60px;
+  }
+  html[data-theme="dark"] {
+    --bg: #0b1226; --surface: #111b38; --surface-2: #14203f;
+    --text: #eaf0ff; --muted: #a6b2ea; --border: rgba(166,178,234,0.16); --border-strong: rgba(166,178,234,0.28);
+    --code-bg: rgba(255,255,255,0.05); --code-text: #d8e0ff; --link: #b39bff; --link-hover: #cdbcff;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body { font-family: "Satoshi", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: var(--bg); color: var(--text); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+  a { color: var(--link); text-decoration: none; }
+  a:hover { color: var(--link-hover); text-decoration: underline; }
+
+  /* ---------- Password gate ---------- */
+  .gate { position: fixed; inset: 0; z-index: 100; display: none; place-items: center;
+    background: radial-gradient(120% 120% at 50% 0%, #10214a 0%, #0a1330 60%, #070d20 100%); }
+  .gate.show { display: grid; }
+  .gate-card { width: min(400px, 90vw); background: rgba(255,255,255,0.04); border: 1px solid rgba(166,178,234,0.24);
+    border-radius: 16px; padding: 2.6rem 2.4rem; text-align: center; backdrop-filter: blur(8px); color: #eaf0ff; }
+  .gate-dot { width: 16px; height: 16px; border-radius: 50%; margin: 0 auto 1.1rem; background: var(--flow); box-shadow: 0 0 24px rgba(135,57,228,.5); }
+  .gate-card .brandline { font-weight: 900; font-size: 1.15rem; letter-spacing: -.2px; }
+  .gate-card .tagline { color: #a6b2ea; font-size: .9rem; margin: .35rem 0 1.7rem; }
+  .gate-card input { width: 100%; box-sizing: border-box; padding: .8rem 1rem; font-size: 1rem;
+    border: 1px solid rgba(166,178,234,0.3); border-radius: 10px; background: rgba(255,255,255,0.06); color: #fff; }
+  .gate-card input:focus { outline: 2px solid var(--violet); }
+  .gate-card button { width: 100%; margin-top: 1rem; padding: .85rem; font-size: 1rem; font-weight: 800; border: 0;
+    border-radius: 999px; background: var(--flow); color: #fff; cursor: pointer; letter-spacing: .2px; }
+  .gate-card button:hover { filter: brightness(1.06); }
+  .gate-err { color: #ff9db0; font-size: .85rem; min-height: 1.2em; margin-top: .8rem; }
+  .gate-shake { animation: shk .4s; }
+  @keyframes shk { 0%,100%{transform:none} 20%,60%{transform:translateX(-7px)} 40%,80%{transform:translateX(7px)} }
+
+  /* ---------- Top bar ---------- */
+  .topbar { position: sticky; top: 0; z-index: 50; height: var(--topbar-h);
+    display: flex; align-items: center; gap: 16px; padding: 0 20px;
+    background: color-mix(in srgb, var(--surface) 88%, transparent);
+    backdrop-filter: saturate(140%) blur(14px); border-bottom: 1px solid var(--border); }
+  .topbar::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 3px; background: var(--flow); }
+  .brand { display: flex; align-items: baseline; gap: 10px; font-weight: 900; letter-spacing: -.3px; }
+  .brand .b { font-size: 20px; color: var(--text); }
+  .brand .tag { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.4px; color: var(--muted);
+    padding: 3px 8px; border: 1px solid var(--border-strong); border-radius: 999px; }
+  .topbar .spacer { flex: 1; }
+  .topbar a.back { font-size: 13px; font-weight: 700; color: var(--muted); }
+  .topbar a.back:hover { color: var(--text); text-decoration: none; }
+  .icon-btn { display: inline-grid; place-items: center; width: 34px; height: 34px; border: 1px solid var(--border-strong);
+    border-radius: 9px; background: var(--surface); color: var(--text); cursor: pointer; font-size: 15px; }
+  .icon-btn:hover { border-color: var(--violet); }
+  .menu-btn { display: none; }
+
+  /* ---------- Layout ---------- */
+  .shell { display: grid; grid-template-columns: var(--sidebar-w) minmax(0,1fr); }
+  @media (min-width: 1180px) { .shell { grid-template-columns: var(--sidebar-w) minmax(0,1fr) var(--toc-w); } }
+
+  .sidebar { position: sticky; top: var(--topbar-h); height: calc(100vh - var(--topbar-h)); overflow-y: auto;
+    border-right: 1px solid var(--border); background: var(--surface); padding: 22px 16px 40px; }
+  .side-label { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.3px; color: var(--muted); margin: 6px 8px 10px; }
+  .doc-link { display: block; padding: 11px 12px; border-radius: 10px; margin-bottom: 4px; color: var(--text); border: 1px solid transparent; }
+  .doc-link:hover { background: var(--surface-2); text-decoration: none; border-color: var(--border); }
+  .doc-link .t { font-weight: 800; font-size: 14.5px; }
+  .doc-link .s { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .doc-link.active { background: color-mix(in srgb, var(--violet) 8%, var(--surface)); border-color: color-mix(in srgb, var(--violet) 30%, var(--border)); }
+  .doc-link.active .t { background: var(--flow); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+  .sidebar hr { border: none; border-top: 1px solid var(--border); margin: 18px 6px; }
+  .side-toc a { display: block; font-size: 13px; color: var(--muted); padding: 4px 8px; border-left: 2px solid transparent; margin-left: 4px; }
+  .side-toc a.lvl3 { padding-left: 20px; font-size: 12.5px; }
+  .side-toc a:hover { color: var(--text); text-decoration: none; }
+  .side-toc a.current { color: var(--text); border-left-color: var(--violet); font-weight: 700; }
+
+  .main { padding: 40px clamp(20px, 5vw, 72px) 120px; min-width: 0; }
+  .content { max-width: 860px; }
+  .doc-meta { font-size: 12px; color: var(--muted); margin-bottom: 6px; font-weight: 700; letter-spacing: .4px; text-transform: uppercase; }
+
+  .rail { display: none; position: sticky; top: var(--topbar-h); height: calc(100vh - var(--topbar-h)); overflow-y: auto;
+    padding: 40px 20px; border-left: 1px solid var(--border); }
+  @media (min-width: 1180px) { .rail { display: block; } }
+  .rail .rlabel { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.2px; color: var(--muted); margin-bottom: 10px; }
+  .rail a { display: block; font-size: 12.5px; color: var(--muted); padding: 3px 0; border-left: 2px solid transparent; padding-left: 10px; }
+  .rail a.lvl3 { padding-left: 22px; }
+  .rail a:hover { color: var(--text); text-decoration: none; }
+  .rail a.current { color: var(--text); border-left-color: var(--violet); font-weight: 700; }
+
+  .md h1, .md h2, .md h3, .md h4 { line-height: 1.25; scroll-margin-top: calc(var(--topbar-h) + 16px); font-weight: 900; }
+  .md h1 { font-size: clamp(28px, 3.4vw, 38px); letter-spacing: -.5px; margin: 0 0 8px; }
+  .md h2 { font-size: clamp(21px, 2.3vw, 27px); margin: 42px 0 12px; padding-top: 18px; border-top: 1px solid var(--border); letter-spacing: -.2px; }
+  .md h3 { font-size: 18px; margin: 28px 0 8px; }
+  .md h4 { font-size: 15.5px; margin: 20px 0 6px; color: var(--muted); }
+  .md h2:first-of-type { border-top: none; padding-top: 0; }
+  .md p { margin: 12px 0; }
+  .md strong { font-weight: 800; }
+  .md ul, .md ol { margin: 12px 0; padding-left: 24px; }
+  .md li { margin: 5px 0; }
+  .md li::marker { color: var(--muted); }
+  .md hr { border: none; border-top: 1px solid var(--border); margin: 32px 0; }
+  .md blockquote { margin: 16px 0; padding: 10px 18px; border-left: 3px solid var(--violet);
+    background: color-mix(in srgb, var(--violet) 6%, transparent); border-radius: 0 10px 10px 0; color: var(--text); }
+  .md blockquote p { margin: 6px 0; }
+  .md code { font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace; font-size: 0.86em;
+    background: var(--code-bg); color: var(--code-text); padding: 2px 6px; border-radius: 6px; border: 1px solid var(--border); }
+  .md pre { background: var(--code-bg); border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; overflow-x: auto; margin: 16px 0; }
+  .md pre code { background: none; border: none; padding: 0; font-size: 13px; line-height: 1.55; color: var(--code-text); }
+  .md table { border-collapse: collapse; width: 100%; margin: 18px 0; font-size: 14px; display: block; overflow-x: auto; }
+  .md thead th { background: var(--surface-2); text-align: left; font-weight: 800; }
+  .md th, .md td { border: 1px solid var(--border); padding: 8px 12px; vertical-align: top; }
+  .md tbody tr:nth-child(even) { background: color-mix(in srgb, var(--muted) 4%, transparent); }
+  .md a.ext-ref { color: var(--code-text); background: var(--code-bg); border: 1px dashed var(--border-strong);
+    padding: 1px 6px; border-radius: 6px; font-family: ui-monospace, monospace; font-size: 0.85em; cursor: help; }
+  .md a.ext-ref:hover { text-decoration: none; border-color: var(--violet); }
+  .loading { color: var(--muted); font-size: 14px; padding: 40px 0; }
+
+  .scrim { display: none; }
+  @media (max-width: 900px) {
+    .shell { grid-template-columns: 1fr; }
+    .menu-btn { display: inline-grid; }
+    .sidebar { position: fixed; top: var(--topbar-h); left: 0; z-index: 40; width: min(320px, 84vw);
+      transform: translateX(-102%); transition: transform .22s ease; box-shadow: 0 20px 60px rgba(20,34,69,.22); }
+    .sidebar.open { transform: none; }
+    .scrim.show { display: block; position: fixed; inset: var(--topbar-h) 0 0 0; background: rgba(10,18,40,.4); z-index: 35; }
+  }
+</style>
+</head>
+<body>
+  <div class="gate" id="gate">
+    <form class="gate-card" id="gateCard">
+      <div class="gate-dot"></div>
+      <div class="brandline">Board Creative Lab</div>
+      <div class="tagline">Enter the password to view the documentation.</div>
+      <input id="gatePw" type="password" autocomplete="current-password" placeholder="Password" aria-label="Password" />
+      <button type="submit">Unlock</button>
+      <div class="gate-err" id="gateErr"></div>
+    </form>
+  </div>
+
+  <header class="topbar">
+    <button class="icon-btn menu-btn" id="menuBtn" aria-label="Toggle navigation">☰</button>
+    <div class="brand"><span class="b">Board</span><span class="tag">Creative Lab · Docs</span></div>
+    <div class="spacer"></div>
+    <a class="back" href="../">← All mockups</a>
+    <button class="icon-btn" id="themeBtn" aria-label="Toggle theme" title="Toggle light/dark">◐</button>
+  </header>
+
+  <div class="scrim" id="scrim"></div>
+
+  <div class="shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="side-label">Documents</div>
+      <nav id="docNav"></nav>
+      <hr />
+      <div class="side-label">On this page</div>
+      <nav class="side-toc" id="sideToc"></nav>
+    </aside>
+    <main class="main">
+      <div class="content">
+        <div class="doc-meta" id="docMeta"></div>
+        <article class="md" id="md"><div class="loading">Loading…</div></article>
+      </div>
+    </main>
+    <aside class="rail">
+      <div class="rlabel">Contents</div>
+      <nav id="railToc"></nav>
+    </aside>
+  </div>
+
+  <script src="marked.min.js"></script>
+  <script>
+  // PAYLOAD is null for the local (un-gated) build, or an encrypted blob for deploy.
+  var PAYLOAD = __PAYLOAD_JSON__;
+
+  (function () {
+    var DOCS = {
+      agents:       { file: "AGENTS.md",              title: "AGENTS.md",              sub: "Lab operating manual" },
+      design:       { file: "DESIGN.md",              title: "DESIGN.md",              sub: "Visual design direction" },
+      illustration: { file: "ILLUSTRATION-SYSTEM.md", title: "ILLUSTRATION-SYSTEM.md", sub: "Illustration-icon spec" }
+    };
+    var FILE_TO_ID = {};
+    Object.keys(DOCS).forEach(function (id) { FILE_TO_ID[DOCS[id].file.toLowerCase()] = id; });
+    var DOCS_TEXT = null;   // populated after decrypt (deploy build)
+    var cache = {};
+    var current = "agents";
+
+    var mdEl = document.getElementById("md");
+    var metaEl = document.getElementById("docMeta");
+    var sideTocEl = document.getElementById("sideToc");
+    var railTocEl = document.getElementById("railToc");
+    var docNavEl = document.getElementById("docNav");
+    var sidebar = document.getElementById("sidebar");
+    var scrim = document.getElementById("scrim");
+
+    var themeBtn = document.getElementById("themeBtn");
+    function applyTheme(t) { document.documentElement.setAttribute("data-theme", t); try { localStorage.setItem("labdocs-theme", t); } catch (e) {} }
+    (function initTheme() {
+      var saved; try { saved = localStorage.getItem("labdocs-theme"); } catch (e) {}
+      if (!saved) saved = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      applyTheme(saved);
+    })();
+    themeBtn.addEventListener("click", function () {
+      applyTheme(document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark");
+    });
+
+    document.getElementById("menuBtn").addEventListener("click", function () {
+      sidebar.classList.toggle("open"); scrim.classList.toggle("show");
+    });
+    scrim.addEventListener("click", function () { sidebar.classList.remove("open"); scrim.classList.remove("show"); });
+
+    Object.keys(DOCS).forEach(function (id) {
+      var a = document.createElement("a");
+      a.className = "doc-link"; a.href = "#" + id; a.dataset.doc = id;
+      a.innerHTML = '<div class="t">' + DOCS[id].title + '</div><div class="s">' + DOCS[id].sub + '</div>';
+      docNavEl.appendChild(a);
+    });
+
+    function slugify(s) {
+      return s.toLowerCase().trim().replace(/[^\w\s-]/g, "").replace(/\s+/g, "-").replace(/-+/g, "-").replace(/^-|-$/g, "");
+    }
+
+    function rewriteLinks() {
+      mdEl.querySelectorAll("a[href]").forEach(function (a) {
+        var href = a.getAttribute("href");
+        if (!href) return;
+        if (/^https?:\/\//i.test(href)) { a.target = "_blank"; a.rel = "noopener"; return; }
+        if (href.charAt(0) === "#") return;
+        var clean = href.split("#")[0].split("/").pop().toLowerCase();
+        if (FILE_TO_ID[clean]) {
+          var targetId = FILE_TO_ID[clean];
+          a.href = "#" + targetId;
+          a.addEventListener("click", function (e) { e.preventDefault(); location.hash = targetId; });
+          return;
+        }
+        a.classList.add("ext-ref");
+        a.title = "Source file in the prototype repo";
+        a.addEventListener("click", function (e) { e.preventDefault(); });
+      });
+    }
+
+    function buildToc() {
+      var heads = mdEl.querySelectorAll("h2, h3");
+      sideTocEl.innerHTML = ""; railTocEl.innerHTML = "";
+      var used = {};
+      heads.forEach(function (h) {
+        var base = slugify(h.textContent) || "section";
+        var id = base, n = 2; while (used[id]) { id = base + "-" + n++; } used[id] = true;
+        h.id = id;
+        [sideTocEl, railTocEl].forEach(function (container) {
+          var a = document.createElement("a");
+          a.href = "#" + id; a.textContent = h.textContent;
+          if (h.tagName === "H3") a.className = "lvl3";
+          a.dataset.target = id;
+          a.addEventListener("click", function (e) {
+            e.preventDefault();
+            var el = document.getElementById(id);
+            if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+            history.replaceState(null, "", "#" + current);
+            sidebar.classList.remove("open"); scrim.classList.remove("show");
+          });
+          container.appendChild(a);
+        });
+      });
+      mdEl.querySelectorAll("h1, h4").forEach(function (h) { if (!h.id) h.id = slugify(h.textContent) || ""; });
+    }
+
+    var spy;
+    function setupScrollSpy() {
+      if (spy) spy.disconnect();
+      spy = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) {
+          if (!en.isIntersecting) return;
+          var id = en.target.id;
+          document.querySelectorAll(".side-toc a, .rail a").forEach(function (a) {
+            a.classList.toggle("current", a.dataset.target === id);
+          });
+        });
+      }, { rootMargin: "-72px 0px -70% 0px", threshold: 0 });
+      mdEl.querySelectorAll("h2, h3").forEach(function (h) { spy.observe(h); });
+    }
+
+    function markActiveDoc() {
+      document.querySelectorAll(".doc-link").forEach(function (a) { a.classList.toggle("active", a.dataset.doc === current); });
+    }
+
+    function loadDoc(id) {
+      if (DOCS_TEXT) return Promise.resolve(DOCS_TEXT[id]);
+      return fetch(DOCS[id].file, { cache: "no-cache" }).then(function (r) {
+        if (!r.ok) throw new Error(r.status); return r.text();
+      });
+    }
+
+    function render(id) {
+      current = id; markActiveDoc();
+      metaEl.textContent = DOCS[id].sub;
+      mdEl.innerHTML = '<div class="loading">Loading ' + DOCS[id].title + "…</div>";
+      var done = function (text) {
+        try { mdEl.innerHTML = marked.parse(text, { gfm: true, breaks: false, mangle: false, headerIds: false }); }
+        catch (e) { mdEl.innerHTML = "<pre>" + text.replace(/[&<>]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]; }) + "</pre>"; }
+        buildToc(); rewriteLinks(); setupScrollSpy(); window.scrollTo(0, 0);
+      };
+      if (cache[id]) { done(cache[id]); return; }
+      loadDoc(id).then(function (t) { cache[id] = t; done(t); })
+        .catch(function (err) {
+          mdEl.innerHTML = '<div class="loading">Could not load <code>' + DOCS[id].file + "</code> (" + err.message +
+            "). If viewing locally, serve over http rather than file://.</div>";
+          sideTocEl.innerHTML = ""; railTocEl.innerHTML = "";
+        });
+    }
+
+    function route() {
+      var h = (location.hash || "").replace(/^#/, "");
+      if (DOCS[h]) { render(h); return; }
+      if (!h) { render("agents"); return; }
+      var el = document.getElementById(h);
+      if (el) { el.scrollIntoView(); return; }
+      render("agents");
+    }
+    window.addEventListener("hashchange", route);
+
+    // ---- gate (deploy build only) ----
+    function b64ToBytes(s) { return Uint8Array.from(atob(s), function (c) { return c.charCodeAt(0); }); }
+    async function decryptDocs(password) {
+      var salt = b64ToBytes(PAYLOAD.salt), iv = b64ToBytes(PAYLOAD.iv), ct = b64ToBytes(PAYLOAD.ct);
+      var km = await crypto.subtle.importKey("raw", new TextEncoder().encode(password), "PBKDF2", false, ["deriveKey"]);
+      var key = await crypto.subtle.deriveKey(
+        { name: "PBKDF2", salt: salt, iterations: PAYLOAD.iter, hash: "SHA-256" },
+        km, { name: "AES-GCM", length: 256 }, false, ["decrypt"]);
+      var pt = await crypto.subtle.decrypt({ name: "AES-GCM", iv: iv }, key, ct);
+      return JSON.parse(new TextDecoder().decode(pt));
+    }
+
+    function boot() { route(); }
+
+    if (PAYLOAD) {
+      var SHARED_KEY = "board-lab-pw";   // shared with the gated mockup pages: unlock once, browse all
+      var gate = document.getElementById("gate");
+      var card = document.getElementById("gateCard");
+      var pw = document.getElementById("gatePw");
+      var err = document.getElementById("gateErr");
+
+      function succeed(docs, pwval, remember) {
+        DOCS_TEXT = docs;
+        if (remember && pwval) { try { localStorage.setItem(SHARED_KEY, pwval); } catch (e) {} }
+        gate.classList.remove("show");
+        boot();
+      }
+      function showGate() {
+        gate.classList.add("show");
+        setTimeout(function () { pw.focus(); }, 50);
+        card.addEventListener("submit", function (e) {
+          e.preventDefault(); err.textContent = "";
+          decryptDocs(pw.value).then(function (docs) { succeed(docs, pw.value, true); })
+            .catch(function () {
+              err.textContent = "Incorrect password.";
+              card.classList.remove("gate-shake"); void card.offsetWidth; card.classList.add("gate-shake");
+              pw.select();
+            });
+        });
+      }
+      var saved = null; try { saved = localStorage.getItem(SHARED_KEY); } catch (e) {}
+      if (saved) {
+        decryptDocs(saved).then(function (docs) { succeed(docs, saved, false); })
+          .catch(function () { try { localStorage.removeItem(SHARED_KEY); } catch (e) {} showGate(); });
+      } else {
+        showGate();
+      }
+    } else {
+      boot();
+    }
+  })();
+  </script>
+</body>
+</html>

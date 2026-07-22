@@ -1,0 +1,7 @@
+# The repo is PUBLIC. Never commit plaintext doc sources or the un-gated preview —
+# the deployed page ships them AES-encrypted instead. Copy these in from
+# prototype-home/ before running build.py.
+AGENTS.md
+DESIGN.md
+ILLUSTRATION-SYSTEM.md
+preview.html
