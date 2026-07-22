@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Board — Illustration icon system</title>
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&display=swap" rel="stylesheet" />
+  <style>
+    :root{
+      --navy:#142245; --twilight:#253e7d; --sky:#32bef0; --sky-300:#76d3f5; --sky-100:#cff4fc;
+      --teal:#0c9995; --aqua:#46eeaa; --violet:#8739e4;
+      --shade:#f7f8fa; --line:#e9ebf8; --muted:#5c6584; --n2:#b4b8c6; --bp:#a6b2ea;
+      --font:"Satoshi",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:var(--font);color:var(--navy);background:#fff;line-height:1.6;-webkit-font-smoothing:antialiased}
+    .wrap{max-width:1120px;margin:0 auto;padding:56px 24px 140px}
+    .kicker{font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--twilight)}
+    h1{font-size:38px;line-height:1.08;letter-spacing:-.02em;margin-top:10px}
+    h2{font-size:24px;letter-spacing:-.01em}
+    h3{font-size:17px}
+    .lead{color:var(--muted);max-width:72ch;margin-top:14px;font-size:17px}
+    .note{font-size:14px;color:var(--muted);max-width:74ch;margin-top:10px}
+    section{margin-top:72px}
+    .rule{height:1px;background:var(--line);margin-top:24px}
+    .step-no{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:var(--navy);color:#fff;font-size:13px;font-weight:800;margin-right:10px;vertical-align:2px}
+
+    /* families */
+    .fam{display:flex;flex-wrap:wrap;gap:12px;margin-top:16px}
+    .famcol{margin-top:22px}
+    .tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:3px 9px;border-radius:999px;margin-left:8px;vertical-align:2px}
+    .tag-lock{background:#eef0f7;color:var(--twilight)} .tag-ours{background:#e2f7ee;color:#0a7f7b}
+    .chipimg{width:92px;text-align:center}
+    .chipimg .box{height:92px;border-radius:16px;background:var(--shade);display:grid;place-items:center;border:1px solid var(--line)}
+    .chipimg img{width:46px;height:46px}
+    .chipimg .cap{font-size:11px;color:var(--muted);margin-top:7px}
+
+    /* anchor reference */
+    .anchor{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:28px;align-items:center;margin-top:20px}
+    .anchor img{width:100%;border:1px solid var(--line);border-radius:16px;background:var(--shade)}
+    .dna{display:flex;flex-direction:column;gap:10px;margin-top:4px}
+    .dna span{font-size:13.5px;font-weight:600;padding:9px 14px;border-radius:12px;background:var(--shade);border:1px solid var(--line)}
+    .dna b{color:var(--twilight)}
+
+    /* toolbar (sticky, global toggles) */
+    .toolbar{position:sticky;top:0;z-index:20;display:flex;gap:10px;align-items:center;flex-wrap:wrap;
+      padding:14px 0;margin-top:28px;background:rgba(255,255,255,.86);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+    .btn{font-family:inherit;font-size:13px;font-weight:700;padding:9px 16px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--navy);cursor:pointer}
+    .btn:hover{border-color:var(--twilight)} .btn.primary{background:var(--navy);color:#fff;border-color:var(--navy)}
+
+    /* concept blocks — expanded + card */
+    .concept{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);gap:24px;align-items:center;margin-top:26px}
+    .exp{border:1px solid var(--line);border-radius:20px;background:var(--shade);padding:8px}
+    .exp svg{width:100%;height:auto;display:block}
+    .side .num{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--twilight)}
+    .side h3{font-size:20px;margin-top:4px}
+    .side p{font-size:14px;color:var(--muted);margin-top:8px}
+    .cardmini{margin-top:16px;border:1px solid var(--line);border-radius:16px;overflow:hidden;max-width:300px}
+    .cardmini .thumb{background:var(--shade);border-bottom:1px solid var(--line);padding:2px}
+    .cardmini .thumb svg{width:100%;height:auto;display:block}
+    .cardmini .mini-body{padding:10px 14px}
+    .cardmini .mini-body .lbl{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+    .cardmini .mini-body .t{font-size:14px;font-weight:700;margin-top:2px}
+
+    /* shared illustration primitives */
+    .il-g{stroke:url(#flow);fill:none;stroke-linecap:round;stroke-linejoin:round}
+    .il-faint{stroke:var(--bp);fill:none;opacity:.55}
+    .il-ink{fill:none;stroke:var(--navy);stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+    .il-fill{fill:var(--sky-300)}
+    .il-node{fill:#fff;filter:drop-shadow(0 5px 14px rgba(20,34,69,.13))}
+    .il-nodedot{fill:#fff;stroke:var(--navy);stroke-width:2}
+    .il-core-ring{fill:none;stroke:url(#flow);stroke-width:3}
+    .il-cap{fill:var(--muted);font-family:var(--font);font-size:13px;font-weight:600}
+
+    /* NAVY mode — the non-gradient option (dark blue lines, no gradient) */
+    .stage.navy .il-g,.stage.navy .il-core-ring{stroke:var(--navy)}
+
+    /* DARK surface (agent pages) */
+    .stage.dark, .stage.dark .exp, .stage.dark .cardmini .thumb{background:#0e1830}
+    .stage.dark .exp,.stage.dark .cardmini,.stage.dark .cardmini .thumb{border-color:#22305a}
+    .stage.dark .il-faint{stroke:#39497e;opacity:.7}
+    .stage.dark .il-ink{stroke:#dfe6ff}
+    .stage.dark .il-node{fill:#16223f;filter:drop-shadow(0 6px 16px rgba(0,0,0,.5))}
+    .stage.dark .il-nodedot{fill:#16223f;stroke:#dfe6ff}
+    .stage.dark.navy .il-g,.stage.dark.navy .il-core-ring{stroke:#dfe6ff}
+    .stage.dark .il-cap{fill:#9aa6c7}
+    .stage.dark .side h3{color:#e9ebf8} .stage.dark .side p{color:#9aa6c7} .stage.dark .cardmini .mini-body .t{color:#e9ebf8}
+
+    /* two-tone icon (FA Thumbprint) + bridge strip */
+    .tt-box{width:120px;height:120px;border-radius:18px;background:var(--shade);border:1px solid var(--line);display:grid;place-items:center;padding:22px}
+    .tt-box img{width:100%;height:100%;object-fit:contain}
+    .stage.dark .tt-box{background:#0e1830;border-color:#22305a}
+    .bridge{display:flex;align-items:center;gap:22px;flex-wrap:wrap;margin-top:18px;padding:20px 22px;border:1px solid var(--line);border-radius:18px;background:var(--shade)}
+    .stage.dark .bridge{background:#0e1830;border-color:#22305a}
+    .bridge .arrow{font-size:26px;color:var(--muted)}
+    .bi{text-align:center}
+    .bi .bx{width:122px;height:122px;border-radius:16px;background:#fff;border:1px solid var(--line);display:grid;place-items:center;padding:16px;overflow:hidden}
+    .stage.dark .bi .bx{background:#16223f;border-color:#22305a}
+    .bi .bx img{width:100%;height:100%;object-fit:contain}
+    .bi .bx svg{width:118%;height:auto}
+    .bi .bcap{font-size:12px;color:var(--muted);margin-top:8px}
+    /* concept illustration (animated anchor) */
+    .concept-illo{border:1px solid var(--line);border-radius:20px;background:#fff;padding:12px;margin-top:18px}
+    .stage.dark .concept-illo{background:#0e1830;border-color:#22305a}
+    .concept-illo svg{width:100%;height:auto;display:block}
+    .m-panel{fill:var(--shade)} .stage.dark .m-panel{fill:#111c38}
+    .m-grid{stroke:var(--line)} .stage.dark .m-grid{stroke:#22305a}
+    .m-base{stroke:var(--navy);opacity:.4} .stage.dark .m-base{stroke:#7d88b0}
+    .m-flat{stroke:var(--navy);fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round} .stage.dark .m-flat{stroke:#dfe6ff}
+    .m-ramp{stroke:url(#flow);fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+    .stage.navy .m-ramp{stroke:var(--navy)} .stage.dark.navy .m-ramp{stroke:#dfe6ff}
+    .m-txt{fill:var(--muted);font-family:var(--font);font-size:15px} .stage.dark .m-txt{fill:#9aa6c7}
+    .m-tipbg{fill:#fff;stroke:var(--line)} .stage.dark .m-tipbg{fill:#16223f;stroke:#2a3966}
+    .m-tiph{fill:var(--navy);font-family:var(--font);font-size:16px;font-weight:700} .stage.dark .m-tiph{fill:#e9ebf8}
+    .m-tips{fill:var(--muted);font-family:var(--font);font-size:12.5px} .stage.dark .m-tips{fill:#9aa6c7}
+    .m-area{fill:url(#flow);opacity:.14} .stage.navy .m-area{fill:var(--navy);opacity:.09}
+    .m-node{fill:url(#flow)} .stage.navy .m-node{fill:var(--navy)}
+    footer{margin-top:90px;color:var(--muted);font-size:13px;border-top:1px solid var(--line);padding-top:20px}
+    @media(max-width:820px){.anchor,.concept{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <linearGradient id="flow" x1="0" y1="1" x2="1" y2="0">
+    <stop offset="0" stop-color="#253e7d"/><stop offset=".5" stop-color="#8739e4"/><stop offset="1" stop-color="#32bef0"/>
+  </linearGradient>
+  <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+    <stop offset="0" stop-color="#8739e4" stop-opacity=".28"/><stop offset="1" stop-color="#8739e4" stop-opacity="0"/>
+  </radialGradient>
+</defs></svg>
+
+<div class="wrap stage" id="stage">
+  <p class="kicker">Board · Design system · Final for feedback</p>
+  <h1>An illustration icon system,<br/>bridged from your work</h1>
+  <p class="lead">One visual language for the icons that carry meaning — anchored on Board’s own illustration style, unified across two densities: an <strong>expanded illustration</strong> for big canvases and a <strong>card icon</strong> where space is tight. Use the controls to compare the gradient and plain-navy line options, and the light / dark surface.</p>
+
+  <!-- GLOBAL CONTROLS -->
+  <div class="toolbar">
+    <button class="btn primary" id="replay">▶ Replay draw-in</button>
+    <button class="btn" id="t-mode">Line: Gradient ⇄ Navy</button>
+    <button class="btn" id="t-dark">◐ Dark surface</button>
+  </div>
+
+  <!-- 1 · WHERE WE STARTED -->
+  <section>
+    <h2><span class="step-no">1</span>Where we started — four icon families</h2>
+    <p class="note">Two are brand-locked and set the vibe everything else must rhyme with. Two were flexible and clashed — the two-tone icons and the line illustrations. This system reconciles those two.</p>
+    <div class="famcol">
+      <p class="kicker" style="font-size:11px">Agent icons <span class="tag tag-lock">Locked · brand</span></p>
+      <div class="fam">
+        <div class="chipimg"><div class="box"><img src="assets/icon-fpa.svg" alt=""></div><div class="cap">FP&amp;A</div></div>
+        <div class="chipimg"><div class="box"><img src="assets/icon-controller.svg" alt=""></div><div class="cap">Controller</div></div>
+        <div class="chipimg"><div class="box"><img src="assets/icon-merch.svg" alt=""></div><div class="cap">Merchandiser</div></div>
+        <div class="chipimg"><div class="box"><img src="assets/icon-supply.svg" alt=""></div><div class="cap">Supply Chain</div></div>
+      </div>
+    </div>
+    <div class="famcol">
+      <p class="kicker" style="font-size:11px">Cube sub-solution icons <span class="tag tag-lock">Locked · brand</span></p>
+      <div class="fam">
+        <div class="chipimg"><div class="box"><img src="assets/icon-sub1.svg" alt=""></div><div class="cap">Solution 1</div></div>
+        <div class="chipimg"><div class="box"><img src="assets/icon-sub2.svg" alt=""></div><div class="cap">Solution 2</div></div>
+        <div class="chipimg"><div class="box"><img src="assets/icon-sub3.svg" alt=""></div><div class="cap">Solution 3</div></div>
+      </div>
+    </div>
+    <div class="famcol">
+      <p class="kicker" style="font-size:11px">Two-tone icons — FontAwesome Thumbprint (Light) <span class="tag tag-lock">Base · discussable</span></p>
+      <div style="display:flex;gap:18px;align-items:center;flex-wrap:wrap;margin-top:14px">
+        <div class="tt-box"><img src="assets/icon-fa-thumbprint.svg" alt="FontAwesome Thumbprint two-tone icon"></div>
+        <p class="note" style="margin-top:0;max-width:52ch">A light-blue fill under a twilight line — the two-tone recipe. This is the base the illustration icons <strong>bridge from</strong>; the drawn work below is its expansion, not a replacement.</p>
+      </div>
+    </div>
+    <p class="note" style="margin-top:22px">So the two flexible families <span class="tag tag-ours">Our work</span> — the two-tone icons above and the line illustrations — are unified below into one system that keeps the two-tone identity and the line-drawn feel.</p>
+  </section>
+
+  <!-- 2 · THE ANCHOR -->
+  <section>
+    <h2><span class="step-no">2</span>The anchor — your illustration style</h2>
+    <p class="note">Board’s marketing illustrations already carry the DNA. We didn’t invent a language — we distilled this one into a reusable icon system.</p>
+    <div class="anchor">
+      <img src="assets/refs/merch-detect.png" alt="Board illustration: a merchandising signal changes — gradient line chart with tooltip and glow node" />
+      <div class="dna">
+        <span><b>Gradient flow</b> — navy → violet → sky, carried by the line</span>
+        <span><b>Two-tone marks</b> — navy line + light-blue accent</span>
+        <span><b>Dotted construction guides</b> — the technical, drawn feel</span>
+        <span><b>Draw-in</b> — the line builds itself, color travels through</span>
+      </div>
+    </div>
+    <p class="note" style="margin-top:14px">Kept as reference — this is the “Step 4” real asset. The system below reads as a continuation of it, not a departure.</p>
+  </section>
+
+  <!-- 3 · CONCEPT ILLUSTRATION (animated anchor) -->
+  <section>
+    <h2><span class="step-no">3</span>Concept illustration — the anchor, animated</h2>
+    <p class="note">How the anchor style presents in motion: the flat line settles, the <strong>gradient ramp draws itself in</strong>, the area fills, and the moment lands with a tooltip and a glowing node. No redesign — the original illustration, given the draw-in. We call this a <strong>concept illustration</strong>: rich, narrative, a single data-moment. (The card icons and expanded versions below are <strong>decorative illustrations</strong>.)</p>
+    <div class="concept-illo"><div id="moment"></div></div>
+  </section>
+
+  <!-- 4 · DECORATIVE ILLUSTRATIONS -->
+  <section>
+    <h2><span class="step-no">4</span>Decorative illustrations — expanded ↔ card</h2>
+    <p class="note">The icon system, bridged from the two-tone icon. Each concept in two densities that share one language: the <strong>gradient structural line</strong> (thick trunks → thin branches), a <strong>two-tone focal icon</strong>, faint dotted guides, and the draw-in. The big canvas tells the story; the card distils it to a focal mark.</p>
+    <div class="bridge">
+      <div class="bi"><div class="bx"><img src="assets/icon-fa-thumbprint.svg" alt=""></div><div class="bcap">Two-tone icon · FA Thumbprint</div></div>
+      <div class="arrow" aria-hidden="true">→</div>
+      <div class="bi"><div class="bx"><div class="card-svg" data-card="sec"></div></div><div class="bcap">Illustration icon · ours</div></div>
+      <div class="arrow" aria-hidden="true">→</div>
+      <div class="bi"><div class="bx" style="width:180px"><div class="card-svg" data-card="dc"></div></div><div class="bcap">…across the set</div></div>
+    </div>
+
+    <div class="concept" id="c-dc">
+      <div class="exp"><div class="exp-svg" data-exp="dc"></div></div>
+      <div class="side">
+        <div class="num">Concept 01</div>
+        <h3>Data Connectivity &amp; Integration</h3>
+        <p>Governed sources — ERP, cloud, spreadsheets, AI — collected through governance and activated into one platform, then out to decisions.</p>
+        <div class="cardmini"><div class="thumb"><div class="card-svg" data-card="dc"></div></div><div class="mini-body"><div class="lbl">Card icon</div><div class="t">Data Connectivity &amp; Integration</div></div></div>
+      </div>
+    </div>
+
+    <div class="rule"></div>
+
+    <div class="concept" id="c-sec">
+      <div class="exp"><div class="exp-svg" data-exp="sec"></div></div>
+      <div class="side">
+        <div class="num">Concept 02</div>
+        <h3>Trusted Security, Governance &amp; Control</h3>
+        <p>A protected core inside concentric layers of governance, with every action passing an approval on the path in.</p>
+        <div class="cardmini"><div class="thumb"><div class="card-svg" data-card="sec"></div></div><div class="mini-body"><div class="lbl">Card icon</div><div class="t">Trusted Security, Governance &amp; Control</div></div></div>
+      </div>
+    </div>
+
+    <div class="rule"></div>
+
+    <div class="concept" id="c-ops">
+      <div class="exp"><div class="exp-svg" data-exp="ops"></div></div>
+      <div class="side">
+        <div class="num">Concept 03</div>
+        <h3>Platform Operations, Scale &amp; Performance</h3>
+        <p>One platform fanning out to thousands of users and lines of business, throughput holding as it scales.</p>
+        <div class="cardmini"><div class="thumb"><div class="card-svg" data-card="ops"></div></div><div class="mini-body"><div class="lbl">Card icon</div><div class="t">Platform Operations, Scale &amp; Performance</div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <footer>Board illustration icon system · expanded + card · gradient/navy + light/dark · standalone presentation build · <code>/illustration-system.html</code></footer>
+</div>
+
+<script type="module">
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- two-tone glyphs (24-box): navy line + sky-300 accent ---------- */
+  const G = {
+    cloud:`<path class="il-fill" d="M7.5 16.5h9a3.4 3.4 0 0 0 .3-6.8" opacity="0"/><path class="il-ink" d="M7.5 16.5h9a3.4 3.4 0 0 0 .3-6.8 5.4 5.4 0 0 0-10.2-1.3A3.4 3.4 0 0 0 7.5 16.5z"/><circle class="il-fill" cx="9.6" cy="12.6" r="1.3"/><circle class="il-fill" cx="13.4" cy="12.6" r="1.3"/>`,
+    data:`<ellipse class="il-fill" cx="12" cy="6" rx="6.4" ry="2.2"/><g class="il-ink"><ellipse cx="12" cy="6" rx="6.4" ry="2.2"/><path d="M5.6 6v9c0 1.3 2.9 2.3 6.4 2.3s6.4-1 6.4-2.3V6"/><path d="M5.6 10.5c0 1.3 2.9 2.3 6.4 2.3s6.4-1 6.4-2.3"/></g>`,
+    sheet:`<rect class="il-fill" x="5" y="5" width="6" height="6" rx="1"/><g class="il-ink"><rect x="4.5" y="4.5" width="15" height="15" rx="2"/><path d="M4.5 9.5h15M9.5 4.5v15"/></g>`,
+    ai:`<path class="il-fill" d="M17.6 13l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7z"/><path class="il-ink" d="M10 3.6l1.8 5 5 1.8-5 1.8-1.8 5-1.8-5-5-1.8 5-1.8z"/>`,
+    chart:`<circle class="il-fill" cx="17.6" cy="7" r="2.1"/><g class="il-ink"><path d="M5 4v15h15"/><path d="M7.6 14l3.2-3.3 3 2 3.4-4"/></g>`,
+    badge:`<circle class="il-fill" cx="12" cy="10.5" r="4.2"/><g class="il-ink"><circle cx="12" cy="10.5" r="6.8"/><path d="M9 10.7 L11.1 12.8 L15.2 8.6"/><path d="M9.2 16.6 L8.3 20 L12 18.4 L15.7 20 L14.8 16.6"/></g>`,
+    shield:`<path class="il-fill" d="M12 4.4l5.4 1.9v3.8c0 3.2-2.3 5.2-5.4 6.3-3.1-1.1-5.4-3.1-5.4-6.3V6.3z"/><g class="il-ink"><path d="M12 3.6l6.2 2.2v4.4c0 3.7-2.6 5.9-6.2 7.2-3.6-1.3-6.2-3.5-6.2-7.2V5.8z"/><path d="M9.4 12l1.9 1.9 3.5-3.7"/></g>`,
+    people:`<circle class="il-fill" cx="9.5" cy="8" r="3"/><g class="il-ink"><circle cx="9.5" cy="8" r="3.2"/><path d="M4 18.5c.5-3 2.6-4.7 5.5-4.7s5 1.7 5.5 4.7"/><circle cx="16.5" cy="9" r="2.4"/><path d="M15.6 14c2.4-.3 4.4 1.2 4.9 3.7"/></g>`,
+    building:`<rect class="il-fill" x="6" y="9" width="12" height="9" rx="1"/><g class="il-ink"><path d="M6 19V6.5a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1V19"/><path d="M14 19V10.5a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1V19"/><path d="M4 19h16M8.5 9h1.5M8.5 12h1.5M8.5 15h1.5"/></g>`,
+    cube:`<path class="il-fill" d="M12 3.6 L19.4 7.8 L12 12 L4.6 7.8 Z"/><g class="il-ink"><path d="M12 3.6 L19.4 7.8 L19.4 16.2 L12 20.4 L4.6 16.2 L4.6 7.8 Z"/><path d="M4.6 7.8 L12 12 L19.4 7.8 M12 12 V20.4"/></g>`,
+  };
+  const glyph = (k,x,y,s=1)=>`<g transform="translate(${(x-12*s).toFixed(1)},${(y-12*s).toFixed(1)}) scale(${s})">${G[k]}</g>`;
+  const node = (x,y,r,k,gs)=>`<g class="il-chip"><circle class="il-node" cx="${x}" cy="${y}" r="${r}"/>${glyph(k,x,y,gs||(r/15))}</g>`;
+  const core = (x,y,r,k)=>`<g class="il-corewrap"><circle class="il-glow" cx="${x}" cy="${y}" r="${r+16}" fill="url(#glow)"/><circle class="il-node" cx="${x}" cy="${y}" r="${r}"/><circle class="il-core-ring draw" cx="${x}" cy="${y}" r="${r}"/>${glyph(k,x,y,r/15)}</g>`;
+  const gate = (x,y)=>`<g class="il-chip"><circle class="il-node" cx="${x}" cy="${y}" r="17"/><circle class="il-fill" cx="${x}" cy="${y}" r="10.5"/><path class="il-ink" d="M${x-4.5} ${y} l3 3 6-6.5"/></g>`;
+  const ring = (cx,cy,r)=>`<path class="il-faint draw" d="M${cx} ${cy-r} A${r} ${r} 0 1 1 ${(cx-0.1).toFixed(1)} ${cy-r} Z"/>`;
+  const P=(cx,cy,r,d)=>[cx+r*Math.cos(d*Math.PI/180),cy+r*Math.sin(d*Math.PI/180)];
+
+  /* ---------- EXPANDED illustrations (900 × 600) ---------- */
+  const EXP = {};
+
+  // Data Connectivity — sources converge through governance into the platform, out to decisions
+  EXP.dc = ()=>{
+    const HX=500,HY=300, CONV=[330,300], GATE=[398,300];
+    const src=[['cloud',215,150],['data',140,255],['sheet',140,375],['ai',215,480]];
+    const out=[['chart',760,222],['badge',760,378]];
+    let s=`<svg viewBox="0 0 900 600" aria-hidden="true">`;
+    s+=ring(HX,HY,190)+ring(HX,HY,150);
+    for(let k=0;k<12;k++){const[a,b]=P(HX,HY,196,k*30),[c,d]=P(HX,HY,208,k*30);s+=`<path class="il-faint draw" d="M${a.toFixed(1)} ${b.toFixed(1)} L${c.toFixed(1)} ${d.toFixed(1)}"/>`;}
+    src.forEach(([,x,y],i)=>{s+=`<path class="il-g draw" stroke-width="${i%2?1.6:2.6}" d="M${x} ${y} L${CONV[0]} ${CONV[1]}"/>`;});
+    s+=`<path class="il-g draw" stroke-width="2.8" d="M${CONV[0]} 300 H${GATE[0]-17}"/><path class="il-g draw" stroke-width="2.8" d="M${GATE[0]+17} 300 H${HX-58}"/>`;
+    out.forEach(([,x,y])=>{s+=`<path class="il-g draw" stroke-width="1.8" d="M${HX+58} ${HY} L${x-30} ${y}"/>`;});
+    s+=`<circle class="il-nodedot draw" cx="${CONV[0]}" cy="${CONV[1]}" r="5"/>`;
+    src.forEach(([k,x,y])=>s+=node(x,y,30,k,1.5));
+    out.forEach(([k,x,y])=>s+=node(x,y,30,k,1.5));
+    s+=gate(GATE[0],GATE[1]);
+    s+=core(HX,HY,58,'cube');
+    s+=`</svg>`; return s;
+  };
+
+  // Trusted Security — protected core inside concentric governance, approval on the path in
+  EXP.sec = ()=>{
+    const CX=470,CY=300, GATE=[300,300];
+    const ent=[['people',150,215],['data',150,385]];
+    let s=`<svg viewBox="0 0 900 600" aria-hidden="true">`;
+    s+=ring(CX,CY,205)+ring(CX,CY,150);
+    for(let k=0;k<16;k++){const[a,b]=P(CX,CY,211,k*22.5),[c,d]=P(CX,CY,222,k*22.5);s+=`<path class="il-faint draw" d="M${a.toFixed(1)} ${b.toFixed(1)} L${c.toFixed(1)} ${d.toFixed(1)}"/>`;}
+    ent.forEach(([,x,y])=>s+=`<path class="il-g draw" stroke-width="2" d="M${x+30} ${y} L${GATE[0]} ${GATE[1]}"/>`);
+    s+=`<path class="il-g draw" stroke-width="2.8" d="M${GATE[0]+17} 300 H${CX-66}"/>`;
+    // orbiting audit marker on inner ring
+    const[ax,ay]=P(CX,CY,150,-52);
+    s+=`<path class="il-g draw" stroke-width="1.6" d="M${CX} ${CY-150} A150 150 0 0 1 ${ax.toFixed(1)} ${ay.toFixed(1)}"/>`;
+    ent.forEach(([k,x,y])=>s+=node(x,y,28,k,1.45));
+    s+=gate(GATE[0],GATE[1]);
+    s+=node(ax,ay,20,'badge',1.1);
+    s+=core(CX,CY,66,'shield');
+    s+=`</svg>`; return s;
+  };
+
+  // Platform Operations — one platform fanning out to many endpoints, throughput holding
+  EXP.ops = ()=>{
+    const CX=300,CY=300;
+    const ep=[['people',640,120],['building',740,205],['people',780,320],['building',730,435],['people',630,505],['chart',560,235],['people',560,380]];
+    let s=`<svg viewBox="0 0 900 600" aria-hidden="true">`;
+    // faint reach arc
+    s+=`<path class="il-faint draw" d="M560 90 A320 320 0 0 1 560 510"/>`;
+    ep.forEach(([,x,y],i)=>s+=`<path class="il-g draw" stroke-width="${i<3?2.6:1.5}" d="M${CX+58} ${CY} L${x-26} ${y}"/>`);
+    ep.forEach(([k,x,y])=>s+=node(x,y,26,k,1.35));
+    // small performance meter, top-left of core
+    s+=`<g transform="translate(150,150)"><path class="il-g draw" stroke-width="2.4" d="M0 46 L18 34 L36 40 L60 8"/><circle class="il-fill" cx="60" cy="8" r="4"/><circle class="il-ink" cx="60" cy="8" r="4"/></g>`;
+    s+=core(CX,CY,60,'cube');
+    s+=`</svg>`; return s;
+  };
+
+  /* ---------- CARD icons (340 × 190) ---------- */
+  const wrap = inner => `<svg viewBox="0 0 340 190" aria-hidden="true"><g transform="translate(50,5) scale(1.2)">${inner}</g></svg>`;
+  const CARD = {
+    dc: wrap(`
+      <g class="il-faint" stroke-dasharray="2 4"><path d="M30 120 L170 120 M100 18 L30 120 M100 18 L170 120"/></g>
+      <path class="il-g draw" stroke-width="2.75" d="M95 38 L67 71 M105 38 L133 71"/>
+      <path class="il-g draw" stroke-width="1.4" d="M60 85 L46 113 M65 85 L96 113 M135 85 L104 113 M140 85 L154 113"/>
+      <circle class="il-nodedot draw" cx="62" cy="78" r="7"/><circle class="il-nodedot draw" cx="138" cy="78" r="7"/>
+      <circle class="il-nodedot draw" cx="44" cy="118" r="5"/><circle class="il-nodedot draw" cx="100" cy="118" r="5"/><circle class="il-nodedot draw" cx="156" cy="118" r="5"/>
+      <g class="il-focal"><circle class="il-fill" cx="100" cy="30" r="9"/><circle class="il-ink" cx="100" cy="30" r="9"/><path class="il-ink" d="M96.3 29.7 l2.5 2.5 4.6-5.2"/></g>`),
+    sec: wrap(`
+      <path class="il-g draw" stroke-width="2.75" d="M60 55 L100 35 L140 55 L140 100 L100 120 L60 100 Z"/>
+      <path class="il-g draw" stroke-width="1.4" d="M60 55 L100 75 L140 55 M100 75 L100 120"/>
+      <g class="il-faint" stroke-dasharray="2 4"><path d="M100 35 L100 12 M140 55 L172 40 M60 55 L28 40 M140 100 L172 114 M60 100 L28 114"/><circle cx="100" cy="77" r="58" opacity=".7"/></g>
+      <g class="il-focal"><rect class="il-fill" x="92" y="70" width="16" height="13" rx="2"/><rect class="il-ink" x="92" y="70" width="16" height="13" rx="2"/><path class="il-ink" d="M95 70 v-3.5 a5 5 0 0 1 10 0 V70"/></g>`),
+    ops: wrap(`
+      <g class="il-faint" stroke-dasharray="2 4"><circle cx="100" cy="75" r="62"/><path d="M100 5 V145 M32 75 H168"/></g>
+      <circle class="il-g draw" stroke-width="2.75" cx="100" cy="75" r="46"/>
+      <ellipse class="il-g draw" stroke-width="1.4" cx="100" cy="75" rx="46" ry="18"/>
+      <ellipse class="il-g draw" stroke-width="1.4" cx="100" cy="75" rx="20" ry="46"/>
+      <g class="il-focal">
+        <circle class="il-fill" cx="100" cy="57" r="4"/><circle class="il-ink" cx="100" cy="57" r="4"/>
+        <circle class="il-fill" cx="126" cy="88" r="4"/><circle class="il-ink" cx="126" cy="88" r="4"/>
+        <circle class="il-fill" cx="72" cy="84" r="4"/><circle class="il-ink" cx="72" cy="84" r="4"/></g>`),
+  };
+
+  /* ---------- mount ---------- */
+  document.querySelectorAll('[data-exp]').forEach(el=>el.innerHTML=EXP[el.dataset.exp]());
+  document.querySelectorAll('[data-card]').forEach(el=>el.innerHTML=CARD[el.dataset.card]);
+
+  /* ---------- concept illustration: the anchor, animated ---------- */
+  const MOMENT = ()=>`<svg viewBox="0 0 680 380" aria-hidden="true">
+    <rect class="m-panel" x="8" y="8" width="664" height="300" rx="18"/>
+    <g class="m-grid" stroke-width="1"><line x1="36" y1="90" x2="644" y2="90"/><line x1="36" y1="150" x2="644" y2="150"/><line x1="36" y1="210" x2="644" y2="210"/></g>
+    <line class="m-base" x1="36" y1="214" x2="644" y2="214" stroke-width="1.6" stroke-dasharray="7 5"/>
+    <text class="m-txt" x="44" y="204">Average rate of sale</text>
+    <path class="m-area" d="M398 209 L470 182 L556 120 L636 60 L636 300 L398 300 Z"/>
+    <path class="m-flat draw" d="M36 214 L76 209 L116 216 L156 210 L196 214 L236 209 L276 213 L316 211 L356 214 L398 209"/>
+    <path class="m-ramp draw" d="M398 209 L470 182 L556 120 L636 60"/>
+    <g class="m-tip">
+      <rect class="m-tipbg" x="398" y="40" width="216" height="52" rx="12"/>
+      <text class="m-tiph" x="414" y="66">Sell-through +38% vs plan</text>
+      <text class="m-tips" x="414" y="84">Detected in-week</text>
+    </g>
+    <g class="m-nodewrap"><circle class="m-glow" cx="636" cy="60" r="15" fill="url(#glow)"/><circle class="m-node" cx="636" cy="60" r="6" stroke="#fff" stroke-width="2"/></g>
+    <g class="m-txt" font-size="13" text-anchor="middle"><text x="60" y="336">W18</text><text x="170" y="336">W19</text><text x="280" y="336">W20</text><text x="390" y="336">W21</text><text x="500" y="336">W22</text><text x="610" y="336">W23</text></g>
+  </svg>`;
+  document.getElementById('moment').innerHTML = MOMENT();
+  function animateMoment(){
+    const r=document.getElementById('moment'); if(!r||reduce) return;
+    r.querySelectorAll('.m-grid,.m-base,.m-area').forEach(e=>{e.style.transition='none';e.style.opacity='0';void e.getBoundingClientRect();e.style.transition='opacity .6s ease .1s';e.style.opacity='';});
+    [r.querySelector('.m-flat'),r.querySelector('.m-ramp')].forEach((p,i)=>{const len=p.getTotalLength();p.style.transition='none';p.style.strokeDasharray=len;p.style.strokeDashoffset=len;void p.getBoundingClientRect();p.style.transition=`stroke-dashoffset ${i?1.1:.9}s cubic-bezier(.22,1,.36,1) ${i?.95:.2}s`;p.style.strokeDashoffset=0;});
+    [r.querySelector('.m-tip'),r.querySelector('.m-nodewrap')].forEach(g=>{g.style.transformBox='fill-box';g.style.transformOrigin='center';g.style.transition='none';g.style.opacity='0';g.style.transform='scale(.6)';void g.getBoundingClientRect();g.style.transition='opacity .5s ease 1.8s, transform .6s cubic-bezier(.34,1.6,.64,1) 1.8s';g.style.opacity='1';g.style.transform='scale(1)';});
+  }
+
+  /* ---------- draw-in ---------- */
+  function draw(root){
+    if (reduce) return;
+    root.querySelectorAll('.il-faint').forEach(f=>{f.style.transition='none';f.style.opacity='0';void f.getBoundingClientRect();f.style.transition='opacity .6s ease .1s';f.style.opacity='';});
+    root.querySelectorAll('.draw').forEach((p,i)=>{const len=p.getTotalLength?p.getTotalLength():0;if(!len)return;p.style.transition='none';p.style.strokeDasharray=len;p.style.strokeDashoffset=len;void p.getBoundingClientRect();p.style.transition=`stroke-dashoffset 1.05s cubic-bezier(.22,1,.36,1) ${(.15+i*.02).toFixed(3)}s`;p.style.strokeDashoffset=0;});
+    root.querySelectorAll('.il-chip, .il-focal, .il-corewrap').forEach((g,i)=>{g.style.transformBox='fill-box';g.style.transformOrigin='center';g.style.transition='none';g.style.opacity='0';g.style.transform='scale(.55)';void g.getBoundingClientRect();g.style.transition=`opacity .5s ease ${(.5+i*.05).toFixed(2)}s, transform .6s cubic-bezier(.34,1.5,.64,1) ${(.5+i*.05).toFixed(2)}s`;g.style.opacity='1';g.style.transform='scale(1)';});
+  }
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){draw(e.target);io.unobserve(e.target);}}),{threshold:.25});
+  document.querySelectorAll('.concept, .anchor').forEach(c=>io.observe(c));
+  const mio=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){animateMoment();mio.disconnect();}}),{threshold:.3});
+  mio.observe(document.getElementById('moment'));
+
+  /* ---------- global controls ---------- */
+  const stage=document.getElementById('stage');
+  document.getElementById('replay').addEventListener('click',()=>{document.querySelectorAll('.concept').forEach(draw);animateMoment();});
+  document.getElementById('t-mode').addEventListener('click',e=>{stage.classList.toggle('navy');e.target.textContent=stage.classList.contains('navy')?'Line: Navy ⇄ Gradient':'Line: Gradient ⇄ Navy';});
+  document.getElementById('t-dark').addEventListener('click',()=>stage.classList.toggle('dark'));
+</script>
+</body>
+</html>
